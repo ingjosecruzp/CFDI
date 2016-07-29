@@ -77,6 +77,8 @@
     <Compile Include="Model\SeriesModel.cs" />
     <Compile Include="Model\TipoPagosModel.cs" />
     <Compile Include="Model\UnidadesModel.cs" />
+    <Compile Include="ViewModel\ProductosViewModel.cs" />
+    <Compile Include="ViewModel\ProductosGridViewModel.cs" />
     <Compile Include="ViewModel\ClientesGridViewModel.cs" />
     <Compile Include="ViewModel\ClientesViewModel.cs" />
     <Compile Include="ViewModel\DelegateCommand .cs" />
@@ -87,6 +89,12 @@
     <Compile Include="ViewModel\ServicioWS.cs" />
     <Compile Include="Views\BusquedaView.xaml.cs">
       <DependentUpon>BusquedaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductosView.xaml.cs">
+      <DependentUpon>ProductosView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductosGridView.xaml.cs">
+      <DependentUpon>ProductosGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClientesGridView.xaml.cs">
       <DependentUpon>ClientesGridView.xaml</DependentUpon>
@@ -115,6 +123,14 @@
     <Page Include="Views\BusquedaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductosView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProductosGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ClientesGridView.xaml">
       <SubType>Designer</SubType>

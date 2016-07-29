@@ -13,6 +13,9 @@
         <DataTemplate DataType="{x:Type ViewModel:FacturasViewModel}">
             <Views:FacturasView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:ProductosGridViewModel}">
+            <Views:ProductosGridView/>
+        </DataTemplate>
     </UserControl.Resources>
     <DockPanel LastChildFill="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
         <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" DockPanel.Dock="Left">
@@ -33,6 +36,16 @@
                             <Image Source="/Iconos/appbar.group.png" Width="64" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
                         </BulletDecorator.Bullet>
                         <TextBlock Margin="10,0,21,0" Text="Clientes" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="White" />
+                    </BulletDecorator>
+                </Button>
+            </ListBoxItem>
+            <ListBoxItem Width="190">
+                <Button Background="DarkBlue"  Command="{Binding HolaMundo}" CommandParameter="Productos" Cursor="Hand">
+                    <BulletDecorator Width="178">
+                        <BulletDecorator.Bullet>
+                            <Image Source="/Iconos/appbar.group.png" Width="64" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        </BulletDecorator.Bullet>
+                        <TextBlock Margin="10,0,21,0" Text="Productos" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="White" />
                     </BulletDecorator>
                 </Button>
             </ListBoxItem>

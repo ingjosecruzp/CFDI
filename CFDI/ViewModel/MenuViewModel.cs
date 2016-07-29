@@ -32,7 +32,9 @@ namespace CFDI.ViewModel
             if(parameter.ToString()=="Facturas")
                 SelectedViewModel = new FacturasViewModel();     
             else if (parameter.ToString() == "Clientes")
-                SelectedViewModel = new ClientesGridViewModel();     
+                SelectedViewModel = new ClientesGridViewModel();
+            else if (parameter.ToString() == "Productos")
+                SelectedViewModel = new ProductosGridViewModel();
         }
     }
     public class TabItem
