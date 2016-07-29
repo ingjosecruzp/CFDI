@@ -25,7 +25,8 @@ namespace CFDI.ViewModel
             get
             {
                 if(this.Url==null)
-                    return "http://10.10.1.86/WsCfdi/" + this.Servicie + "/" + this.Method;
+                    //return "http://10.10.1.86/WsCfdi/" + this.Servicie + "/" + this.Method;
+                    return "http://200.52.220.238:89/WsCfdi/" + this.Servicie + "/" + this.Method;
                 else
                     return this.Url;
                         
