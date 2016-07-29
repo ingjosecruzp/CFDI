@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="CFDI.Views.MenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Views="clr-namespace:CFDI.Views"
+             xmlns:ViewModel="clr-namespace:CFDI.ViewModel"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type ViewModel:ClientesGridViewModel}">
+            <Views:ClientesGridView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:FacturasViewModel}">
+            <Views:FacturasView/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" DockPanel.Dock="Left">
+            <ListBoxItem Width="190">
+                <Button Background="OliveDrab" Command="{Binding HolaMundo}"  CommandParameter="Facturas" Cursor="Hand">
+                    <BulletDecorator Width="176">
+                        <BulletDecorator.Bullet>
+                            <Image Source="pack://application:,,,/Iconos/appbar.page.text.png" Width="64" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        </BulletDecorator.Bullet>
+                        <TextBlock Margin="10,0,21,0" Text="Facturas" Foreground="White" VerticalAlignment="Center" />
+                    </BulletDecorator>
+                </Button>
+            </ListBoxItem>
+            <ListBoxItem Width="190">
+                <Button Background="OrangeRed" Command="{Binding HolaMundo}" CommandParameter="Clientes" Cursor="Hand">
+                    <BulletDecorator Width="178">
+                        <BulletDecorator.Bullet>
+                            <Image Source="/Iconos/appbar.group.png" Width="64" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        </BulletDecorator.Bullet>
+                        <TextBlock Margin="10,0,21,0" Text="Clientes" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="White" />
+                    </BulletDecorator>
+                </Button>
+            </ListBoxItem>
+        </ListBox>
+        <ScrollViewer>
+        <ContentControl x:Name="Principal" Content="{Binding SelectedViewModel}" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+            </ScrollViewer>
+    </DockPanel>
+</UserControl>

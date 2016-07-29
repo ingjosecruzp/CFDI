@@ -1,0 +1,21 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CFDI"
+        xmlns:Views="clr-namespace:CFDI.Views"
+        xmlns:ViewModel="clr-namespace:CFDI.ViewModel"
+        xmlns:Properties="clr-namespace:CFDI.Properties" x:Class="CFDI.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Window.Resources>
+        <ViewModel:MenuViewModel x:Key="MenuViewModel" />
+        <Views:MenuView x:Key="MenuView" />
+    </Window.Resources>
+    <DockPanel Loaded="DockPanel_Loaded" LastChildFill="True">
+        <Label Content="Dock Panel Layout Demo" FontSize="15" FontWeight="Bold" Background="LightBlue" Foreground="Blue" DockPanel.Dock="Top"/>
+        <Label Content="Footer" FontSize="15" FontWeight="Bold" Background="LightGray" DockPanel.Dock="Bottom" />
+        <ContentControl x:Name="MenuLtl" Content="{StaticResource MenuView}" DataContext="{StaticResource MenuViewModel}" />
+    </DockPanel>
+</Window>

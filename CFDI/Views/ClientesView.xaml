@@ -1,0 +1,72 @@
+﻿<Window x:Class="CFDI.Views.ClientesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Views="clr-namespace:CFDI.Views"
+        xmlns:ViewModel="clr-namespace:CFDI.ViewModel"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        Title="Cliente" Height="585.667" Width="356.333" WindowStartupLocation="CenterScreen" >
+    <Window.Resources>
+        <Views:ClientesGridView x:Key="ClientesGridView" />
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Margin" Value="5,0,5,0" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,2,40,2" />
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="true">
+                            <Border Background="OrangeRed" DockPanel.Dock="right" Margin="5,0,0,0" 
+                                Width="20" Height="20" CornerRadius="5"
+                                ToolTip="{Binding ElementName=customAdorner, 
+                                          Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                                <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center" 
+                                   FontWeight="Bold" Foreground="white" />
+                            </Border>
+                            <AdornedElementPlaceholder Name="customAdorner" VerticalAlignment="Center" >
+                                <Border BorderBrush="red" BorderThickness="1" />
+                            </AdornedElementPlaceholder>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Button x:Name="CmdGuardar" Content="Guardar" HorizontalAlignment="Left" Margin="235,509,0,0" VerticalAlignment="Top" Width="75" Command="{Binding GuardarCliente}"/>
+        <TextBox x:Name="rfc" Text = "{Binding UpdateSourceTrigger=PropertyChanged, Path=Cliente.Rfc, ValidatesOnDataErrors=true, NotifyOnValidationError=true}" HorizontalAlignment="Left" Height="23" Margin="93,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
+        <Label x:Name="label" Content="RFC:" HorizontalAlignment="Left" Margin="12,23,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="razon_social" Text = "{Binding UpdateSourceTrigger=PropertyChanged, Path=Cliente.RazonSocial, ValidatesOnDataErrors=true, NotifyOnValidationError=true}" HorizontalAlignment="Left" Height="23" Margin="93,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
+        <Label x:Name="label_Copy" Content="Razón Social:" HorizontalAlignment="Left" Margin="12,55,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy1" Content="Pais:" HorizontalAlignment="Left" Margin="12,86,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy2" Content="Estado:" HorizontalAlignment="Left" Margin="12,119,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy3" Content="Municipio:" HorizontalAlignment="Left" Margin="12,152,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ciudad" Text = "{Binding Cliente.Ciudad}" HorizontalAlignment="Left" Height="23" Margin="93,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
+        <Label x:Name="label_Copy4" Content="Ciudad:" HorizontalAlignment="Left" Margin="12,187,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="colonia" Text = "{Binding Cliente.Colonia}" HorizontalAlignment="Left" Height="23" Margin="93,223,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
+        <Label x:Name="label_Copy5" Content="Colonia:" HorizontalAlignment="Left" Margin="12,221,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="calle" Text = "{Binding Cliente.Calle}" HorizontalAlignment="Left" Height="23" Margin="93,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
+        <Label x:Name="label_Copy6" Content="Calle:" HorizontalAlignment="Left" Margin="12,256,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="no_exterior" HorizontalAlignment="Left" Height="23" Margin="93,292,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.NoExt}"/>
+        <Label x:Name="label_Copy7" Content="No. Exterior:" HorizontalAlignment="Left" Margin="12,290,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="no_interior" HorizontalAlignment="Left" Height="23" Margin="93,328,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.NoInt}"/>
+        <Label x:Name="label_Copy8" Content="No. Interior:" HorizontalAlignment="Left" Margin="12,326,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="cp" HorizontalAlignment="Left" Height="23" Margin="93,364,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Cp}"/>
+        <Label x:Name="label_Copy9" Content="CP:" HorizontalAlignment="Left" Margin="12,362,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="email" HorizontalAlignment="Left" Height="23" Margin="93,397,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Email}"/>
+        <Label x:Name="label_Copy10" Content="Email:" HorizontalAlignment="Left" Margin="12,395,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="telefono" HorizontalAlignment="Left" Height="23" Margin="93,433,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Telefono}"/>
+        <Label x:Name="label_Copy11" Content="Telefono" HorizontalAlignment="Left" Margin="12,431,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="referencia" HorizontalAlignment="Left" Height="23" Margin="93,467,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Referencia}"/>
+        <Label x:Name="label_Copy12" Content="Referencia" HorizontalAlignment="Left" Margin="12,465,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="estado" HorizontalAlignment="Left" Margin="94,121,0,0" VerticalAlignment="Top" Width="214" ItemsSource="{Binding Estados}" DisplayMemberPath="Nombre" SelectedItem="{Binding SelectEstado}" SelectedValuePath="Id" SelectedValue = "{Binding Cliente.EstadoId}" />
+        <ComboBox x:Name="municipio" HorizontalAlignment="Left" Margin="94,154,0,0" VerticalAlignment="Top" Width="214" ItemsSource="{Binding Municipios }" DisplayMemberPath="Nombre" SelectedItem="{Binding SelectMunicipio}" SelectedValuePath="Id" SelectedValue = "{Binding Cliente.MunicipioId}" />
+        <ComboBox x:Name="pais" HorizontalAlignment="Left" Margin="94,89,0,0" VerticalAlignment="Top" Width="214" ItemsSource="{Binding Paises}" DisplayMemberPath="Nombre"  SelectedItem="{Binding SelectPais}" SelectedValuePath="Id" SelectedValue = "{Binding Cliente.PaisId}"/>
+        <TextBox x:Name="id" HorizontalAlignment="Left" Height="23" Margin="278,0,0,0" TextWrapping="Wrap" Text="{Binding Cliente.Id}" VerticalAlignment="Top" Width="45" Visibility="Hidden"/>
+    </Grid>
+</Window>

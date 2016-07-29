@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="CFDI.Views.ClientesGridView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CFDI.Views"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             mc:Ignorable="d">
+    <DockPanel LastChildFill="True">
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Command="{Binding LlamarVentana}" Width="75" DockPanel.Dock="Top"/>
+        <DataGrid x:Name="dgClientes" ItemsSource="{Binding Clientes}" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectCliente}"  IsReadOnly="True">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick" >
+                    <i:InvokeCommandAction Command="{Binding ModificarCliente}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
