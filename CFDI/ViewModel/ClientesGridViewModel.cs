@@ -43,14 +43,14 @@ namespace CFDI.ViewModel
             ClientesView FrmClientes = new ClientesView();
             FrmClientes.DataContext = clientesViewModel;
             clientesViewModel.CargarForm(SelectCliente.Id);
-            FrmClientes.Show();
+            FrmClientes.ShowDialog();
         }
         private void Llamar(object parameter)
         {
             ClientesViewModel clientesViewModel = new ClientesViewModel();
             ClientesView FrmClientes = new ClientesView();
             FrmClientes.DataContext = clientesViewModel;
-            FrmClientes.Show();
+            FrmClientes.ShowDialog();
         }
         public void LoadClientes()
         {

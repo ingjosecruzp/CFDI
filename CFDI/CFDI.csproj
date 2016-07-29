@@ -74,6 +74,7 @@
     <Compile Include="Model\PaisesModel.cs" />
     <Compile Include="Model\PaisModel.cs" />
     <Compile Include="Model\ProductosModel.cs" />
+    <Compile Include="Model\RespuestaTimbrado.cs" />
     <Compile Include="Model\SeriesModel.cs" />
     <Compile Include="Model\TipoPagosModel.cs" />
     <Compile Include="Model\UnidadesModel.cs" />

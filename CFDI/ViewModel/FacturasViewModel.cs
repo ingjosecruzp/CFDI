@@ -44,6 +44,7 @@ namespace CFDI.ViewModel
         private decimal _Iva;
         private decimal _Total;
         private int _Folio;
+        private RespuestaTimbrado _Respueta;
         //Inicia Propiedas
         public ObservableCollection<ClientesModel> Clientes
         {
@@ -346,6 +347,18 @@ namespace CFDI.ViewModel
 
             set{}
         }
+        public RespuestaTimbrado Respueta
+        {
+            get
+            {
+                return _Respueta;
+            }
+
+            set
+            {
+                _Respueta = value;
+            }
+        }
         //Constructor
         public FacturasViewModel()
         {
@@ -405,6 +418,7 @@ namespace CFDI.ViewModel
                 }
             }
         }
+
         public void LoadProductosGrid()
         {
             ServicioWS WS = new ServicioWS("WsProductos.svc", "getProductosGrid", null, typeof(ObservableCollection<GridProductos>), null);
@@ -467,8 +481,10 @@ namespace CFDI.ViewModel
                     if(Detalles.ToList().Count>0)
                     { 
                         this.CargarDetalles();
-                        ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "addFactura", Factura, typeof(FacturasModel), "factura");
-                        Factura = (FacturasModel)WS.Peticion();
+                        /*ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "addFactura", Factura, typeof(FacturasModel), "factura");
+                        Factura = (FacturasModel)WS.Peticion();*/
+                        ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "addFactura", Factura, typeof(RespuestaTimbrado), "factura");
+                        Respueta = (RespuestaTimbrado)WS.Peticion();
                     }
                     else
                         throw new Exception("Al menos debe de ingresar un producto");
