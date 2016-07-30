@@ -14,5 +14,6 @@ namespace CFDI.Model
         public string folio { get; set; }
         public string xml { get; set; }
         public string cbb { get; set; }
+        public string pdf { get; set; }
     }
 }

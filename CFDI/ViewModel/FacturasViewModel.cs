@@ -1,13 +1,10 @@
 ﻿using CFDI.grid;
 using CFDI.Model;
-using CFDI.Views;
+using SelectPdf;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace CFDI.ViewModel
@@ -163,7 +160,7 @@ namespace CFDI.ViewModel
                 _SelectDetalleProductos = value;
                 RaisePropertyChangedEvent("SelectDetalleProductos");
             }
-        } 
+        }
         public ObservableCollection<MunicipiosModel> Municipios
         {
             get
@@ -311,7 +308,7 @@ namespace CFDI.ViewModel
                 Factura.Subtotal = _Subtotal;
                 return _Subtotal;
             }
-            set{}
+            set { }
         }
         public decimal Iva
         {
@@ -321,14 +318,14 @@ namespace CFDI.ViewModel
                 Factura.Iva = _Iva;
                 return _Iva;
             }
-            set{}
+            set { }
         }
         public int Folio
         {
             get
             {
-                if(SelectSeries != null)
-                { 
+                if (SelectSeries != null)
+                {
                     _Folio = LoadFolio();
                     Factura.Folio = _Folio;
                 }
@@ -345,7 +342,7 @@ namespace CFDI.ViewModel
                 return _Total;
             }
 
-            set{}
+            set { }
         }
         public RespuestaTimbrado Respueta
         {
@@ -366,7 +363,7 @@ namespace CFDI.ViewModel
             Detalles = new ObservableCollection<DetalleViewModel>();
             BusquedaProducto = new DelegateCommand(BProducto);
             BuscarP = new DelegateCommand(WsBuscarProducto);
-            _GuardarFactura = new DelegateCommand(GuardarFactura);
+            _GuardarFactura = new DelegateCommand(PdfSharpConvert);
             CalcularGrid = new DelegateCommand(Calculos);
             Factura = new FacturasModel();
             LoadClientes();
@@ -383,8 +380,8 @@ namespace CFDI.ViewModel
             if (_SelectDetalleProductos.ProductoId != 0)
             {
                 var item = _Detalles.FirstOrDefault(i => i.ProductoId == SelectDetalleProductos.ProductoId);
-                var precio= _Productos.FirstOrDefault(i => i.Id == SelectDetalleProductos.ProductoId);
-                if(item.PrecioUnitario!= precio.PrecioUnitario || item.PrecioUnitario != 0)
+                var precio = _Productos.FirstOrDefault(i => i.Id == SelectDetalleProductos.ProductoId);
+                if (item.PrecioUnitario != precio.PrecioUnitario || item.PrecioUnitario != 0)
                     item.PrecioUnitario = precio.PrecioUnitario;
             }
             RaisePropertyChangedEvent("Subtotal");
@@ -393,10 +390,10 @@ namespace CFDI.ViewModel
         }
         public void BProducto(object parameter)
         {
-           /*LoadProductosGrid();
-           BusquedaView FrmBusqueda = new BusquedaView();
-           FrmBusqueda.DataContext = this;
-           FrmBusqueda.Show();*/
+            /*LoadProductosGrid();
+            BusquedaView FrmBusqueda = new BusquedaView();
+            FrmBusqueda.DataContext = this;
+            FrmBusqueda.Show();*/
         }
         public void WsBuscarProducto(object parameter)
         {
@@ -439,7 +436,7 @@ namespace CFDI.ViewModel
             ObservableCollection<PaisesModel> paises = new ObservableCollection<PaisesModel>();
             paises.Add(new PaisesModel { Id = 35, Nombre = "Mexico" });
             Paises = paises;
-        } 
+        }
         public void LoadTipoPagos()
         {
             ObservableCollection<TipoPagosModel> tipopagos = new ObservableCollection<TipoPagosModel>();
@@ -464,7 +461,7 @@ namespace CFDI.ViewModel
         }
         public void LoadMetodosdePagos()
         {
-            ServicioWS WS = new ServicioWS("WsMetodosdePago.svc", "getMetodosdePago", null, typeof(ObservableCollection<MetodosdePagosModel>),null);
+            ServicioWS WS = new ServicioWS("WsMetodosdePago.svc", "getMetodosdePago", null, typeof(ObservableCollection<MetodosdePagosModel>), null);
             MetodosdePagos = (ObservableCollection<MetodosdePagosModel>)WS.Peticion();
         }
         public void LoadSeries()
@@ -476,39 +473,47 @@ namespace CFDI.ViewModel
         {
             try
             {
-                if (Factura.ClienteId != 0 && Factura.MetododePagosId != 0 && Factura.LugarExpedicion != "" && Factura.LugarExpedicion!=null && Factura.SerieId != 0)
+
+                /*if (Factura.ClienteId != 0 && Factura.MetododePagosId != 0 && Factura.LugarExpedicion != "" && Factura.LugarExpedicion!=null && Factura.SerieId != 0)
                 {
                     if(Detalles.ToList().Count>0)
                     { 
                         this.CargarDetalles();
-                        /*ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "addFactura", Factura, typeof(FacturasModel), "factura");
-                        Factura = (FacturasModel)WS.Peticion();*/
                         ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "addFactura", Factura, typeof(RespuestaTimbrado), "factura");
                         Respueta = (RespuestaTimbrado)WS.Peticion();
+                        if (Respueta.status == "ok")
+                        {
+                            Base64Decode(Respueta.xml, @"C:\Facturas\", Respueta.folio + ".xml");
+                            Base64Decode(Respueta.cbb, @"C:\Facturas\", Respueta.folio + ".bmp");
+                            Base64Decode(Respueta.pdf, @"C:\Facturas\", Respueta.folio + ".htm");
+                        }
+                        else
+                            throw new Exception(Respueta.msj);
                     }
                     else
                         throw new Exception("Al menos debe de ingresar un producto");
                 }
                 else
-                    throw new Exception("Los campos con * son obligatorio para continuar");
+                    throw new Exception("Los campos con * son obligatorio para continuar");*/
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         public void CargarDetalles()
         {
-            foreach(DetalleViewModel Detalle in Detalles)
+            foreach (DetalleViewModel Detalle in Detalles)
             {
-                Factura.Detalles.Add(new DetalleFacturasModel{
-                                                ProductoId=Detalle.ProductoId,
-                                                UnidadId=Detalle.UnidadId,
-                                                PrecioUnitario=Detalle.PrecioUnitario,
-                                                Cantidad=Detalle.Cantidad,
-                                                Importe=Detalle.Importe,
-                                                Descuento=Detalle.Descuento
-                                        }
+                Factura.Detalles.Add(new DetalleFacturasModel
+                {
+                    ProductoId = Detalle.ProductoId,
+                    UnidadId = Detalle.UnidadId,
+                    PrecioUnitario = Detalle.PrecioUnitario,
+                    Cantidad = Detalle.Cantidad,
+                    Importe = Detalle.Importe,
+                    Descuento = Detalle.Descuento
+                }
                                      );
             }
         }
@@ -516,6 +521,41 @@ namespace CFDI.ViewModel
         {
             ServicioWS WS = new ServicioWS("WsSeries.svc", "getUltimoFolio", _SelectSeries.Id, typeof(string), "serieid");
             return Convert.ToInt16((string)WS.Peticion());
+        }
+        private static void Base64Decode(string archivo_base64, string ruta, string nombre_archivo)
+        {
+            byte[] bytes = Convert.FromBase64String(archivo_base64);
+            File.WriteAllBytes(ruta + nombre_archivo, bytes);
+        }
+        public void PdfSharpConvert(object parameter)
+        {
+            /*string htmlContent = File.ReadAllText(@"C:\Facturas\A12.html");
+            Byte[] res = null;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                PdfDocument pdf = PdfGenerator.GeneratePdf(htmlContent, PdfSharp.PageSize.A4);
+                pdf.Save(ms);
+                res = ms.ToArray();
+            }
+            File.WriteAllBytes(@"C:\Facturas\A12.pdf", res);*/
+            // instantiate the html to pdf converter          
+            HtmlToPdf converter = new HtmlToPdf();
+            converter.Options.PdfPageSize =PdfPageSize.Letter;
+            converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
+            /*converter.Options.WebPageWidth = 1024;
+            converter.Options.WebPageHeight = 0;
+            converter.Options.WebPageFixedSize = false;*/
+
+            /*converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.AutoFit;
+            converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.AutoFit;*/
+
+            // convert the url to pdf
+            PdfDocument doc = converter.ConvertUrl(@"C:\Facturas\A12.html");
+
+            // save pdf document
+            doc.Save(@"C:\Facturas\A12.pdf");
+            // close pdf document
+            doc.Close();
         }
     }
 }
