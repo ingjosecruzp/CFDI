@@ -1,11 +1,15 @@
 ﻿using CFDI.grid;
 using CFDI.Model;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 using SelectPdf;
 using System;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace CFDI.ViewModel
 {
@@ -363,7 +367,7 @@ namespace CFDI.ViewModel
             Detalles = new ObservableCollection<DetalleViewModel>();
             BusquedaProducto = new DelegateCommand(BProducto);
             BuscarP = new DelegateCommand(WsBuscarProducto);
-            _GuardarFactura = new DelegateCommand(PdfSharpConvert);
+            _GuardarFactura = new DelegateCommand(GuardarFactura);
             CalcularGrid = new DelegateCommand(Calculos);
             Factura = new FacturasModel();
             LoadClientes();
@@ -415,7 +419,6 @@ namespace CFDI.ViewModel
                 }
             }
         }
-
         public void LoadProductosGrid()
         {
             ServicioWS WS = new ServicioWS("WsProductos.svc", "getProductosGrid", null, typeof(ObservableCollection<GridProductos>), null);
@@ -474,27 +477,27 @@ namespace CFDI.ViewModel
             try
             {
 
-                /*if (Factura.ClienteId != 0 && Factura.MetododePagosId != 0 && Factura.LugarExpedicion != "" && Factura.LugarExpedicion!=null && Factura.SerieId != 0)
+                if (Factura.ClienteId != 0 && Factura.MetododePagosId != 0 && Factura.LugarExpedicion != "" && Factura.LugarExpedicion!=null && Factura.SerieId != 0 && Factura.TipoPago != 0)
                 {
-                    if(Detalles.ToList().Count>0)
-                    { 
-                        this.CargarDetalles();
-                        ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "addFactura", Factura, typeof(RespuestaTimbrado), "factura");
-                        Respueta = (RespuestaTimbrado)WS.Peticion();
-                        if (Respueta.status == "ok")
-                        {
-                            Base64Decode(Respueta.xml, @"C:\Facturas\", Respueta.folio + ".xml");
-                            Base64Decode(Respueta.cbb, @"C:\Facturas\", Respueta.folio + ".bmp");
-                            Base64Decode(Respueta.pdf, @"C:\Facturas\", Respueta.folio + ".htm");
+                    if (SelectMetodosdePagos.Clave != "01" & SelectMetodosdePagos.Clave != "99" && (Factura.CuentaPago.Length < 4 || Factura.CuentaPago == null || Factura.CuentaPago == "" ))
+                        throw new Exception("Verifique el campo cuenta de pago, al menos debe contener 4 digitios");
+                        if(Detalles.ToList().Count>0)
+                        { 
+                            this.CargarDetalles();
+                            ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "addFactura", Factura, typeof(RespuestaTimbrado), "factura");
+                            Respueta = (RespuestaTimbrado)WS.Peticion();
+                            if (Respueta.status == "ok")
+                            {
+                                GrabarArchivos(Respueta);
+                            }
+                            else
+                                throw new Exception(Respueta.msj);
                         }
                         else
-                            throw new Exception(Respueta.msj);
-                    }
-                    else
-                        throw new Exception("Al menos debe de ingresar un producto");
+                            throw new Exception("Al menos debe de ingresar un producto");
                 }
                 else
-                    throw new Exception("Los campos con * son obligatorio para continuar");*/
+                    throw new Exception("Los campos con * son obligatorio para continuar");
             }
             catch (Exception ex)
             {
@@ -527,35 +530,31 @@ namespace CFDI.ViewModel
             byte[] bytes = Convert.FromBase64String(archivo_base64);
             File.WriteAllBytes(ruta + nombre_archivo, bytes);
         }
-        public void PdfSharpConvert(object parameter)
+        private void GrabarArchivos(RespuestaTimbrado Fact)
         {
-            /*string htmlContent = File.ReadAllText(@"C:\Facturas\A12.html");
-            Byte[] res = null;
-            using (MemoryStream ms = new MemoryStream())
+            SaveFileDialog SaveFileDialog1 = new SaveFileDialog();
+            SaveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            SaveFileDialog1.FileName = SelectSeries.Nombre+Factura.Folio + ".pdf";
+            if (SaveFileDialog1.ShowDialog() == true)
             {
-                PdfDocument pdf = PdfGenerator.GeneratePdf(htmlContent, PdfSharp.PageSize.A4);
-                pdf.Save(ms);
-                res = ms.ToArray();
+                string ruta=Path.GetDirectoryName(SaveFileDialog1.FileName);
+
+                Base64Decode(Respueta.xml, ruta + "\\", Respueta.folio + ".xml");
+                Base64Decode(Respueta.cbb, ruta + "\\", Respueta.folio + ".bmp");
+
+                ReportDocument report = new ReportDocument();
+                report.Load(@"C:\Users\jparedes\Documents\Visual Studio 2015\Projects\CFDI\CFDI\Reportes\PdfFactura.rpt");
+
+                DataSet reportData = new DataSet();
+                reportData.ReadXml(ruta + "\\" + Respueta.folio + ".xml");
+                report.SetDataSource(reportData);
+                report.SetParameterValue("CBBPath", ruta + "\\" + Fact.folio + ".bmp");
+                report.SetParameterValue("LogoPath", ruta + "\\" + Fact.folio + ".jpg");
+                report.SetParameterValue("CadenaOriginal", Fact.cadenaoriginal);
+                //report.Refresh();
+
+                report.ExportToDisk(ExportFormatType.PortableDocFormat, ruta + "\\" + Fact.folio + ".pdf");
             }
-            File.WriteAllBytes(@"C:\Facturas\A12.pdf", res);*/
-            // instantiate the html to pdf converter          
-            HtmlToPdf converter = new HtmlToPdf();
-            converter.Options.PdfPageSize =PdfPageSize.Letter;
-            converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
-            /*converter.Options.WebPageWidth = 1024;
-            converter.Options.WebPageHeight = 0;
-            converter.Options.WebPageFixedSize = false;*/
-
-            /*converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.AutoFit;
-            converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.AutoFit;*/
-
-            // convert the url to pdf
-            PdfDocument doc = converter.ConvertUrl(@"C:\Facturas\A12.html");
-
-            // save pdf document
-            doc.Save(@"C:\Facturas\A12.pdf");
-            // close pdf document
-            doc.Close();
         }
     }
 }

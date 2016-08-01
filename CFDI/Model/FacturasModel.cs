@@ -30,6 +30,7 @@ namespace CFDI.Model
         public FacturasModel()
         {
             this.Detalles = new ObservableCollection<DetalleFacturasModel>();
+            this.CuentaPago = "";
         }
     }
 }

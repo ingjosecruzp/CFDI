@@ -16,7 +16,7 @@
         <GroupBox x:Name="groupBox" Header="Datos Receptor" Margin="10,76,10,0" Height="142" VerticalAlignment="Top"/>
         <TextBox x:Name="txtrazonsocial" Text = "{Binding Cliente.RazonSocial}" Height="23" Margin="265,43,254,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Label x:Name="label" Content="País" HorizontalAlignment="Left" Margin="14.467,92.1,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy" Content="RFC" HorizontalAlignment="Left" Margin="14.467,18.09,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.906,1.311"/>
+        <Label x:Name="label_Copy" Content="RFC*" HorizontalAlignment="Left" Margin="14.467,18.09,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.906,1.311"/>
         <Label x:Name="label_Copy1" Content="Razon Social" HorizontalAlignment="Left" Margin="264.517,17.05,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy2" Content="Estado" HorizontalAlignment="Left" Margin="139.467,92.1,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbrfc" HorizontalAlignment="Left" IsEditable="True"  Margin="14.467,44.05,0,0" Width="245" VerticalAlignment="Top" ItemsSource="{Binding Clientes}" DisplayMemberPath="Rfc" SelectedItem="{Binding SelectCliente}" SelectedValuePath="Id" SelectedValue = "{Binding Factura.ClienteId}"/>
@@ -41,15 +41,15 @@
         <TextBox x:Name="txtfolio" Text = "{Binding Folio}" HorizontalAlignment="Right" Margin="0,43.01,22.533,0" TextWrapping="Wrap" Width="61.906" Height="23" VerticalAlignment="Top" IsReadOnly="True" />
         <Label x:Name="label_Copy12" Content="Folio" HorizontalAlignment="Right" Margin="0,40.05,89.439,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbserie" Margin="0,44.05,130.172,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="62" ItemsSource="{Binding Series}" DisplayMemberPath="Nombre" SelectedItem="{Binding SelectSeries}" SelectedValuePath="Id" SelectedValue = "{Binding Factura.SerieId}" />
-        <Label x:Name="label_Copy13" Content="Serie" HorizontalAlignment="Right" Margin="0,40.05,197.172,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy13" Content="Serie*" HorizontalAlignment="Right" Margin="0,40.05,197.172,0" VerticalAlignment="Top"/>
         <GroupBox x:Name="groupBox2" Header="Datos Factura" Margin="10,218.343,10,0" Height="95" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy14" Content="Método de Pago" HorizontalAlignment="Left" Margin="14.517,245.09,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.906,1.311"/>
+        <Label x:Name="label_Copy14" Content="Método de Pago *" HorizontalAlignment="Left" Margin="14.517,245.09,0,0" VerticalAlignment="Top" RenderTransformOrigin="3.906,1.311"/>
         <ComboBox x:Name="cbmetodopago" HorizontalAlignment="Left" Margin="14.517,271.05,0,0" Width="244.95" VerticalAlignment="Top" ItemsSource="{Binding MetodosdePagos}" DisplayMemberPath="MetodoPago"  SelectedItem="{Binding SelectMetodosdePagos}" SelectedValuePath="Id" SelectedValue = "{Binding Factura.MetododePagosId}"/>
         <Label x:Name="label_Copy15" Content="Cuenta de Pago" HorizontalAlignment="Left" Margin="264.517,245.09,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtcuentapago" Text = "{Binding Factura.CuentaPago}" Height="23" Margin="264.517,271.05,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120"/>
+        <TextBox x:Name="txtcuentapago" Text = "{Binding Factura.CuentaPago,UpdateSourceTrigger=PropertyChanged}" Height="23" Margin="264.517,271.05,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120"/>
         <Label x:Name="label_Copy16" Content="Lugar de Expedicíon" HorizontalAlignment="Left" Margin="389.517,245.09,0,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment"/>
         <TextBox x:Name="txtlugarexpedicion" Text = "{Binding Factura.LugarExpedicion}" Height="23" Margin="389.517,271.05,387.533,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy17" Content="Tipo de Pago" HorizontalAlignment="Right" Margin="0,245.09,302.825,0" VerticalAlignment="Top" RenderTransformOrigin="3.906,1.311"/>
+        <Label x:Name="label_Copy17" Content="Tipo de Pago *" HorizontalAlignment="Right" Margin="0,245.09,302.825,0" VerticalAlignment="Top" RenderTransformOrigin="3.906,1.311"/>
         <ComboBox x:Name="txttipopago" HorizontalAlignment="Right" Margin="0,272.09,187.482,0" Width="195.05" VerticalAlignment="Top" ItemsSource="{Binding TipoPagos}" DisplayMemberPath="Nombre"  SelectedItem="{Binding SelectTipoPagos}" SelectedValuePath="Id" SelectedValue = "{Binding Factura.TipoPago}" />
         <DataGrid Margin="10,318,10,230" ItemsSource="{Binding Detalles,IsAsync=True}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserReorderColumns="False" CanUserSortColumns="False" SelectedItem = "{Binding SelectDetalleProductos}" >
             <i:Interaction.Triggers>
