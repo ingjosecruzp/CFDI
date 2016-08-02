@@ -130,6 +130,7 @@
         <TextBox x:Name="txtsubtotal" Text = "{Binding UpdateSourceTrigger=PropertyChanged, Path=Subtotal,StringFormat=C}" HorizontalAlignment="Left" Height="23" Margin="545,544,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True" Width="120"/>
         <Label x:Name="label1" Content="Subtotal" HorizontalAlignment="Left" Margin="486,544,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label1_Copy" Content="IVA 16%" HorizontalAlignment="Left" Margin="670,541,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbltotal" Content="Total" HorizontalAlignment="Left" Margin="854,543,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbpais" HorizontalAlignment="Left" Margin="14,118,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Paises}" DisplayMemberPath="Nombre"  SelectedItem="{Binding SelectPais}" />
         <ComboBox x:Name="cbestado" HorizontalAlignment="Left" Margin="140,118,0,0" VerticalAlignment="Top" Width="119" ItemsSource="{Binding Estados}" DisplayMemberPath="Nombre" SelectedItem="{Binding SelectEstado}" />
         <Button x:Name="button" Content="Crear CFDI" HorizontalAlignment="Left" Margin="915,582,0,0" VerticalAlignment="Top" Width="97" Height="39" Command="{Binding _GuardarFactura}" />
