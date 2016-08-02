@@ -46,6 +46,7 @@ namespace CFDI.ViewModel
         private decimal _Total;
         private int _Folio;
         private RespuestaTimbrado _Respueta;
+        private string _Color;
         //Inicia Propiedas
         public ObservableCollection<ClientesModel> Clientes
         {
@@ -360,6 +361,19 @@ namespace CFDI.ViewModel
                 _Respueta = value;
             }
         }
+        public string Color
+        {
+            get
+            {
+                return _Color;
+            }
+
+            set
+            {
+                _Color = value;
+                RaisePropertyChangedEvent("Color");
+            }
+        }
         //Constructor
         public FacturasViewModel()
         {
@@ -370,6 +384,7 @@ namespace CFDI.ViewModel
             _GuardarFactura = new DelegateCommand(GuardarFactura);
             CalcularGrid = new DelegateCommand(Calculos);
             Factura = new FacturasModel();
+            _Color = "Black";
             LoadClientes();
             LoadPaises();
             LoadEstados();
@@ -419,6 +434,7 @@ namespace CFDI.ViewModel
                 }
             }
         }
+
         public void LoadProductosGrid()
         {
             ServicioWS WS = new ServicioWS("WsProductos.svc", "getProductosGrid", null, typeof(ObservableCollection<GridProductos>), null);
@@ -477,27 +493,31 @@ namespace CFDI.ViewModel
             try
             {
 
-                if (Factura.ClienteId != 0 && Factura.MetododePagosId != 0 && Factura.LugarExpedicion != "" && Factura.LugarExpedicion!=null && Factura.SerieId != 0 && Factura.TipoPago != 0)
+                if (Factura.ClienteId != 0 && Factura.MetododePagosId != 0 && Factura.LugarExpedicion != "" && Factura.LugarExpedicion != null && Factura.SerieId != 0 && Factura.TipoPago != 0)
                 {
-                    if (SelectMetodosdePagos.Clave != "01" & SelectMetodosdePagos.Clave != "99" && (Factura.CuentaPago.Length < 4 || Factura.CuentaPago == null || Factura.CuentaPago == "" ))
+                    if (SelectMetodosdePagos.Clave != "01" & SelectMetodosdePagos.Clave != "99" && (Factura.CuentaPago.Length < 4 || Factura.CuentaPago == null || Factura.CuentaPago == ""))
                         throw new Exception("Verifique el campo cuenta de pago, al menos debe contener 4 digitios");
-                        if(Detalles.ToList().Count>0)
-                        { 
-                            this.CargarDetalles();
-                            ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "addFactura", Factura, typeof(RespuestaTimbrado), "factura");
-                            Respueta = (RespuestaTimbrado)WS.Peticion();
-                            if (Respueta.status == "ok")
-                            {
-                                GrabarArchivos(Respueta);
-                            }
-                            else
-                                throw new Exception(Respueta.msj);
+                    if (Detalles.ToList().Count > 0)
+                    {
+                        this.CargarDetalles();
+                        ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "addFactura", Factura, typeof(RespuestaTimbrado), "factura");
+                        Respueta = (RespuestaTimbrado)WS.Peticion();
+                        if (Respueta.status == "ok")
+                        {
+                            GrabarArchivos(Respueta);
+                            Color = "Black";
                         }
                         else
-                            throw new Exception("Al menos debe de ingresar un producto");
+                            throw new Exception(Respueta.msj);
+                    }
+                    else
+                        throw new Exception("Al menos debe de ingresar un producto");
                 }
                 else
-                    throw new Exception("Los campos con * son obligatorio para continuar");
+                {
+                    Color = "Red";
+                    throw new Exception("Existen campos pendientes de capturar");
+                }
             }
             catch (Exception ex)
             {

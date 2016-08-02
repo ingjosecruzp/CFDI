@@ -43,7 +43,7 @@
                 <Button Background="DarkBlue"  Command="{Binding HolaMundo}" CommandParameter="Productos" Cursor="Hand">
                     <BulletDecorator Width="178">
                         <BulletDecorator.Bullet>
-                            <Image Source="/Iconos/appbar.group.png" Width="64" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            <Image Source="/Iconos/appbar.tiles.plus.png" Width="64" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
                         </BulletDecorator.Bullet>
                         <TextBlock Margin="10,0,21,0" Text="Productos" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="White" />
                     </BulletDecorator>

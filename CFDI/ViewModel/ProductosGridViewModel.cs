@@ -15,7 +15,7 @@ namespace CFDI.ViewModel
     {
         public DelegateCommand LlamarVentana { get; set; }
         public DelegateCommand ModificarProducto { get; set; }
-        public ObservableCollection<GridProductos> Productos { get; set; }
+        private ObservableCollection<GridProductos> _Productos;
         private GridProductos _SelectProducto;
         //Inician Propiedads
         public GridProductos SelectProducto
@@ -31,6 +31,21 @@ namespace CFDI.ViewModel
                 RaisePropertyChangedEvent("SelectProducto");
             }
         }
+
+        public ObservableCollection<GridProductos> Productos
+        {
+            get
+            {
+                return _Productos;
+            }
+
+            set
+            {
+                _Productos = value;
+                RaisePropertyChangedEvent("Productos");
+            }
+        }
+
         public ProductosGridViewModel()
         {
             LlamarVentana = new DelegateCommand(Llamar);
@@ -43,14 +58,16 @@ namespace CFDI.ViewModel
             ProductosView FrmProductos = new ProductosView();
             FrmProductos.DataContext = productosViewModel;
             productosViewModel.CargarForm(SelectProducto.Id);
-            FrmProductos.Show();
+            FrmProductos.ShowDialog();
+            LoadProductos();
         }
         private void Llamar(object parameter)
         {
             ProductosViewModel productosViewModel = new ProductosViewModel();
             ProductosView FrmProductos = new ProductosView();
             FrmProductos.DataContext = productosViewModel;
-            FrmProductos.Show();
+            FrmProductos.ShowDialog();
+            LoadProductos();
         }
         public void LoadProductos()
         {

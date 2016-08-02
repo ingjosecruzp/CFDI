@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -20,6 +21,7 @@ namespace CFDI.ViewModel
         private ObservableCollection<UnidadesModel> _Unidades;
         private UnidadesModel _SelectUnidad;
         private ProductosModel _ProductoNuevo;
+        private string _Color;
         //Inician Propiedades
         public UnidadesModel SelectUnidad
         {
@@ -34,6 +36,8 @@ namespace CFDI.ViewModel
                 RaisePropertyChangedEvent("SelectUnidad");
             }
         }
+
+
 
         public ObservableCollection<UnidadesModel> Unidades
         {
@@ -63,38 +67,78 @@ namespace CFDI.ViewModel
                 }
             }
         }
+
+        public string Color
+        {
+            get
+            {
+                return _Color;
+            }
+
+            set
+            {
+                _Color = value;
+                RaisePropertyChangedEvent("Color");
+            }
+        }
+
         public ProductosViewModel()
         {
             _SelectUnidad = new UnidadesModel();
             _ProductoNuevo = new ProductosModel();
             GuardarProducto = new DelegateCommand(Guardar);
+            Color = "Black";
             LoadUnidades();
         }
         public void CargarForm(int id)
         {
-            ServicioWS WS = new ServicioWS("WsProductos.svc", "getProducto", id, typeof(ProductosModel), "id");
-            Producto = (ProductosModel)WS.Peticion();
+            try
+            {
+                ServicioWS WS = new ServicioWS("WsProductos.svc", "getProducto", id, typeof(ProductosModel), "id");
+                Producto = (ProductosModel)WS.Peticion();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         public void LoadUnidades()
         {
-            ServicioWS WS = new ServicioWS("WsUnidades.svc", "getUnidades", null, typeof(ObservableCollection<UnidadesModel>), null);
-            Unidades = (ObservableCollection<UnidadesModel>)WS.Peticion();
+            try
+            {
+                ServicioWS WS = new ServicioWS("WsUnidades.svc", "getUnidades", null, typeof(ObservableCollection<UnidadesModel>), null);
+                Unidades = (ObservableCollection<UnidadesModel>)WS.Peticion();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Guardar(object parameter)
         {
-            
-            if (Producto.Codigo != "" && Producto.Descripcion != "" && SelectUnidad.Id != 0 && Producto.PrecioUnitario != 0 )
+          try
             {
-                ServicioWS WS;
-                if (Producto.Id.ToString() == "0")
-                    WS = new ServicioWS("WsProductos.svc", "addProducto", Producto, typeof(ProductosModel), "producto");
+                if (Producto.Codigo != "" && Producto.Descripcion != "" && SelectUnidad.Id != 0 && Producto.PrecioUnitario != 0)
+                {
+                    ServicioWS WS;
+                    if (Producto.Id.ToString() == "0")
+                        WS = new ServicioWS("WsProductos.svc", "addProducto", Producto, typeof(ProductosModel), "producto");
+                    else
+                        WS = new ServicioWS("WsProductos.svc", "updateProducto", Producto, typeof(ProductosModel), "producto");
+                    Producto = (ProductosModel)WS.Peticion();
+                    Color = "Black";
+                }
                 else
-                    WS = new ServicioWS("WsProductos.svc", "updateProducto", Producto, typeof(ProductosModel), "producto");
-                Producto = (ProductosModel)WS.Peticion();
+                {
+                    Color = "Red";
+                    throw new Exception("Existen campos pendientes de capturar");
+                }
+            }   
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else
-                MessageBox.Show("Antes de continuar, debe de corregir los erros señalados","Error",MessageBoxButton.OK,MessageBoxImage.Error);
         }
     }
 }
