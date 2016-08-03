@@ -1,11 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using CFDI.Views;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace CFDI.ViewModel
 {
@@ -109,9 +112,36 @@ namespace CFDI.ViewModel
         }
         public object Peticion()
         {
+            Thread newWindowThread;
             object result;
             try
             {
+
+                newWindowThread = new Thread(new ThreadStart(() =>
+                {
+                    // Create our context, and install it:
+                    SynchronizationContext.SetSynchronizationContext(
+                        new DispatcherSynchronizationContext(
+                            Dispatcher.CurrentDispatcher));
+                        
+                    ProgressBarView Barra = new ProgressBarView();
+                    // When the window closes, shut down the dispatcher
+                    Barra.Closed += (s, e) =>
+                       Dispatcher.CurrentDispatcher.BeginInvokeShutdown(DispatcherPriority.Background);
+
+                    Barra.Show();
+
+                    // Start the Dispatcher Processing
+                    System.Windows.Threading.Dispatcher.Run();
+                }));
+
+                // Set the apartment state
+                newWindowThread.SetApartmentState(ApartmentState.STA);
+                // Make the thread a background thread
+                newWindowThread.IsBackground = true;
+                // Start the thread
+                newWindowThread.Start();
+
                 HttpWebRequest httpWebRequest = WebRequest.Create(requestUrl) as HttpWebRequest;
                 string text = JsonConvert.SerializeObject(JSONRequest);
                 text = string.Concat(new string[]{"{\"",
@@ -138,15 +168,12 @@ namespace CFDI.ViewModel
                     object obj = JsonConvert.DeserializeObject(text2, JSONResponseType);
                     result = obj;
                 }
+                Dispatcher.FromThread(newWindowThread).InvokeShutdown();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                /*result = new Respuesta
-                {
-                    status = "error",
-                    msj = ex.Message
-                };*/
+                //Dispatcher.FromThread(newWindowThread).InvokeShutdown();
+                MessageBox.Show(ex.Message);
                 result = null;
             }
             return result;
