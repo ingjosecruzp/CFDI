@@ -38,7 +38,7 @@
         <Label x:Name="label_Copy10" Content="Email" HorizontalAlignment="Left" Margin="389.517,146.06,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtreferencia" Text = "{Binding Cliente.Referencia}" Height="23" Margin="0,172.02,22.533,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Right" Width="360"/>
         <Label x:Name="label_Copy11" Content="Referencia" HorizontalAlignment="Right" Margin="0,146.06,317.599,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment"/>
-        <TextBox x:Name="txtfolio" Text = "{Binding Folio}" HorizontalAlignment="Right" Margin="0,43.01,22.533,0" TextWrapping="Wrap" Width="61.906" Height="23" VerticalAlignment="Top" IsReadOnly="True" />
+        <TextBox x:Name="txtfolio" Text = "{Binding Folio}" HorizontalAlignment="Right" Margin="0,43.01,22.533,0" TextWrapping="Wrap" Width="61.90" Height="23" VerticalAlignment="Top" IsReadOnly="True" />
         <Label x:Name="label_Copy12" Content="Folio" HorizontalAlignment="Right" Margin="0,40.05,89.439,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbserie" Margin="0,44.05,130.172,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="62" ItemsSource="{Binding Series}" DisplayMemberPath="Nombre" SelectedItem="{Binding SelectSeries}" SelectedValuePath="Id" SelectedValue = "{Binding Factura.SerieId}" />
         <Label x:Name="label_Copy13" Content="Serie" Foreground="{Binding Path=Color}" HorizontalAlignment="Right" Margin="0,40.05,197.172,0" VerticalAlignment="Top"/>

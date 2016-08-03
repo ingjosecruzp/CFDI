@@ -298,10 +298,20 @@ namespace CFDI.ViewModel
             set
             {
                 _SelectCliente = value;
-                Cliente = _SelectCliente;
-                SelectEstado = Estados.Single(i => i.Id == Cliente.EstadoId);
-                SelectPais = Paises.Single(i => i.Id == Cliente.PaisId);
-                SelectMunicipio = Municipios.Single(i => i.Id == Cliente.MunicipioId);
+                if (_SelectCliente != null)
+                {
+                    Cliente = _SelectCliente;
+                    SelectEstado = Estados.Single(i => i.Id == Cliente.EstadoId);
+                    SelectPais = Paises.Single(i => i.Id == Cliente.PaisId);
+                    SelectMunicipio = Municipios.Single(i => i.Id == Cliente.MunicipioId);
+                }
+                else
+                { 
+                    Cliente = null;
+                    SelectMunicipio = null;
+                    //SelectEstado = null;
+                    SelectPais = null;
+                }
                 RaisePropertyChangedEvent("SelectCliente");
             }
         }
