@@ -2,7 +2,6 @@
 using CFDI.Model;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
-using SelectPdf;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -20,6 +19,7 @@ namespace CFDI.ViewModel
         public DelegateCommand CalcularGrid { get; set; }
         public DelegateCommand BuscarP { get; set; }
         public DelegateCommand _GuardarFactura { get; set; }
+        public DelegateCommand _CerrarFactura { get; set; }
         private ObservableCollection<ClientesModel> _Clientes;
         private ClientesModel _SelectCliente;
         private ObservableCollection<EstadosModel> _Estados;
@@ -392,6 +392,7 @@ namespace CFDI.ViewModel
             BusquedaProducto = new DelegateCommand(BProducto);
             BuscarP = new DelegateCommand(WsBuscarProducto);
             _GuardarFactura = new DelegateCommand(GuardarFactura);
+            _CerrarFactura = new DelegateCommand(CerrarFactura);
             CalcularGrid = new DelegateCommand(Calculos);
             Factura = new FacturasModel();
             _Color = "Black";
@@ -408,9 +409,9 @@ namespace CFDI.ViewModel
         {
             if (_SelectDetalleProductos.ProductoId != 0)
             {
-                var item = _Detalles.FirstOrDefault(i => i.ProductoId == SelectDetalleProductos.ProductoId);
+                var item = SelectDetalleProductos;
                 var precio = _Productos.FirstOrDefault(i => i.Id == SelectDetalleProductos.ProductoId);
-                if (item.PrecioUnitario != precio.PrecioUnitario || item.PrecioUnitario != 0)
+                if(item.PrecioUnitario==0)
                     item.PrecioUnitario = precio.PrecioUnitario;
             }
             RaisePropertyChangedEvent("Subtotal");
@@ -534,10 +535,17 @@ namespace CFDI.ViewModel
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        public void CerrarFactura(object parameter)
+        {
+            MessageBox.Show("Cerrar");
+        }
         public void CargarDetalles()
         {
+            Factura.Detalles.Clear();
             foreach (DetalleViewModel Detalle in Detalles)
             {
+                if (Detalle.ProductoId == 0 || Detalle.Cantidad == 0)
+                    throw new Exception("Al menos debe seleccionar un producto y poner una cantidad mayor a 0");
                 Factura.Detalles.Add(new DetalleFacturasModel
                 {
                     ProductoId = Detalle.ProductoId,
@@ -546,8 +554,7 @@ namespace CFDI.ViewModel
                     Cantidad = Detalle.Cantidad,
                     Importe = Detalle.Importe,
                     Descuento = Detalle.Descuento
-                }
-                                     );
+                });
             }
         }
         public int LoadFolio()

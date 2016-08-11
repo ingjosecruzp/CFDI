@@ -7,7 +7,7 @@
         xmlns:ViewModel="clr-namespace:CFDI.ViewModel"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="Cliente" Height="585.667" Width="356.333" WindowStartupLocation="CenterScreen" >
+        Title="Cliente" Height="549.667" Width="356.333" WindowStartupLocation="CenterScreen" >
     <Window.Resources>
         <Views:ClientesGridView x:Key="ClientesGridView" />
         <Style TargetType="{x:Type Label}">
@@ -38,35 +38,51 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Button x:Name="CmdGuardar" Content="Guardar" HorizontalAlignment="Left" Margin="235,509,0,0" VerticalAlignment="Top" Width="75" Command="{Binding GuardarCliente}"/>
-        <TextBox x:Name="rfc" Text = "{Binding UpdateSourceTrigger=PropertyChanged, Path=Cliente.Rfc, ValidatesOnDataErrors=true, NotifyOnValidationError=true}" HorizontalAlignment="Left" Height="23" Margin="93,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
-        <Label x:Name="label" Content="RFC:" HorizontalAlignment="Left" Margin="12,23,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="razon_social" Text = "{Binding UpdateSourceTrigger=PropertyChanged, Path=Cliente.RazonSocial, ValidatesOnDataErrors=true, NotifyOnValidationError=true}" HorizontalAlignment="Left" Height="23" Margin="93,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
-        <Label x:Name="label_Copy" Content="Razón Social:" HorizontalAlignment="Left" Margin="12,55,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy1" Content="Pais:" HorizontalAlignment="Left" Margin="12,86,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy2" Content="Estado:" HorizontalAlignment="Left" Margin="12,119,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_Copy3" Content="Municipio:" HorizontalAlignment="Left" Margin="12,152,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="ciudad" Text = "{Binding Cliente.Ciudad}" HorizontalAlignment="Left" Height="23" Margin="93,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
-        <Label x:Name="label_Copy4" Content="Ciudad:" HorizontalAlignment="Left" Margin="12,187,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="colonia" Text = "{Binding Cliente.Colonia}" HorizontalAlignment="Left" Height="23" Margin="93,223,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
-        <Label x:Name="label_Copy5" Content="Colonia:" HorizontalAlignment="Left" Margin="12,221,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="calle" Text = "{Binding Cliente.Calle}" HorizontalAlignment="Left" Height="23" Margin="93,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
-        <Label x:Name="label_Copy6" Content="Calle:" HorizontalAlignment="Left" Margin="12,256,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="no_exterior" HorizontalAlignment="Left" Height="23" Margin="93,292,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.NoExt}"/>
-        <Label x:Name="label_Copy7" Content="No. Exterior:" HorizontalAlignment="Left" Margin="12,290,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="no_interior" HorizontalAlignment="Left" Height="23" Margin="93,328,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.NoInt}"/>
-        <Label x:Name="label_Copy8" Content="No. Interior:" HorizontalAlignment="Left" Margin="12,326,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="cp" HorizontalAlignment="Left" Height="23" Margin="93,364,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Cp}"/>
-        <Label x:Name="label_Copy9" Content="CP:" HorizontalAlignment="Left" Margin="12,362,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="email" HorizontalAlignment="Left" Height="23" Margin="93,397,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Email}"/>
-        <Label x:Name="label_Copy10" Content="Email:" HorizontalAlignment="Left" Margin="12,395,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="telefono" HorizontalAlignment="Left" Height="23" Margin="93,433,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Telefono}"/>
-        <Label x:Name="label_Copy11" Content="Telefono" HorizontalAlignment="Left" Margin="12,431,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="referencia" HorizontalAlignment="Left" Height="23" Margin="93,467,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Referencia}"/>
-        <Label x:Name="label_Copy12" Content="Referencia" HorizontalAlignment="Left" Margin="12,465,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="estado" HorizontalAlignment="Left" Margin="94,121,0,0" VerticalAlignment="Top" Width="214" ItemsSource="{Binding Estados}" DisplayMemberPath="Nombre" SelectedItem="{Binding SelectEstado}" SelectedValuePath="Id" SelectedValue = "{Binding Cliente.EstadoId}" />
-        <ComboBox x:Name="municipio" HorizontalAlignment="Left" Margin="94,154,0,0" VerticalAlignment="Top" Width="214" ItemsSource="{Binding Municipios }" DisplayMemberPath="Nombre" SelectedItem="{Binding SelectMunicipio}" SelectedValuePath="Id" SelectedValue = "{Binding Cliente.MunicipioId}" />
-        <ComboBox x:Name="pais" HorizontalAlignment="Left" Margin="94,89,0,0" VerticalAlignment="Top" Width="214" ItemsSource="{Binding Paises}" DisplayMemberPath="Nombre"  SelectedItem="{Binding SelectPais}" SelectedValuePath="Id" SelectedValue = "{Binding Cliente.PaisId}"/>
+        <Border BorderBrush="AliceBlue" BorderThickness="5" CornerRadius="6" />
+        <ToolBarTray Height="28" VerticalAlignment="Top">
+            <ToolBar>
+                <Button Command="{Binding GuardarCliente}" ToolTip="Guardar Cliente">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Iconos/appbar.save.png" Width="16" Height="16" />
+                        <TextBlock ><Run Text="Guardar"/></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding _CerrarVentana}" ToolTip="Guardar Cliente">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Iconos/appbar.stop.png" Width="16" Height="16" />
+                        <TextBlock ><Run Text="Cerrar"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <TextBox x:Name="rfc" Text = "{Binding Cliente.Rfc,NotifyOnValidationError=true,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" HorizontalAlignment="Left" Height="23" Margin="93,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
+        <Label x:Name="label" Content="RFC:" HorizontalAlignment="Left" Margin="12,31,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="razon_social" Text = "{Binding Cliente.RazonSocial,UpdateSourceTrigger=PropertyChanged,NotifyOnValidationError=true, ValidatesOnDataErrors=true}" HorizontalAlignment="Left" Height="23" Margin="93,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
+        <Label x:Name="label_Copy" Content="Razón Social:" HorizontalAlignment="Left" Margin="12,63,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy1" Content="Pais:" HorizontalAlignment="Left" Margin="12,94,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy2" Content="Estado:" HorizontalAlignment="Left" Margin="12,127,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy3" Content="Municipio:" HorizontalAlignment="Left" Margin="12,160,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ciudad" Text = "{Binding Cliente.Ciudad,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="93,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
+        <Label x:Name="label_Copy4" Content="Ciudad:" HorizontalAlignment="Left" Margin="12,195,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="colonia" Text = "{Binding Cliente.Colonia,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="93,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
+        <Label x:Name="label_Copy5" Content="Colonia:" HorizontalAlignment="Left" Margin="12,229,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="calle" Text = "{Binding Cliente.Calle,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="93,266,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215"/>
+        <Label x:Name="label_Copy6" Content="Calle:" HorizontalAlignment="Left" Margin="12,264,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="no_exterior" HorizontalAlignment="Left" Height="23" Margin="93,300,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.NoExt,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label x:Name="label_Copy7" Content="No. Exterior:" HorizontalAlignment="Left" Margin="12,298,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="no_interior" HorizontalAlignment="Left" Height="23" Margin="93,336,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.NoInt,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label x:Name="label_Copy8" Content="No. Interior:" HorizontalAlignment="Left" Margin="12,334,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="cp" HorizontalAlignment="Left" Height="23" Margin="93,372,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Cp,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label x:Name="label_Copy9" Content="CP:" HorizontalAlignment="Left" Margin="12,370,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="email" HorizontalAlignment="Left" Height="23" Margin="93,405,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Email,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label x:Name="label_Copy10" Content="Email:" HorizontalAlignment="Left" Margin="12,403,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="telefono" HorizontalAlignment="Left" Height="23" Margin="93,441,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Telefono,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label x:Name="label_Copy11" Content="Telefono" HorizontalAlignment="Left" Margin="12,439,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="referencia" HorizontalAlignment="Left" Height="23" Margin="93,475,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="215" Text="{Binding Cliente.Referencia,UpdateSourceTrigger=PropertyChanged}"/>
+        <Label x:Name="label_Copy12" Content="Referencia" HorizontalAlignment="Left" Margin="12,473,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="estado" HorizontalAlignment="Left" Margin="94,129,0,0" VerticalAlignment="Top" Width="214" ItemsSource="{Binding Estados}" DisplayMemberPath="Nombre" SelectedItem="{Binding SelectEstado}" SelectedValuePath="Id" SelectedValue = "{Binding Cliente.EstadoId}" />
+        <ComboBox x:Name="municipio" HorizontalAlignment="Left" Margin="94,162,0,0" VerticalAlignment="Top" Width="214" ItemsSource="{Binding Municipios}" DisplayMemberPath="Nombre" SelectedItem="{Binding SelectMunicipio}" SelectedValuePath="Id" SelectedValue = "{Binding Cliente.MunicipioId}" />
+        <ComboBox x:Name="pais" HorizontalAlignment="Left" Margin="94,97,0,0" VerticalAlignment="Top" Width="214" ItemsSource="{Binding Paises}" DisplayMemberPath="Nombre"  SelectedItem="{Binding SelectPais}" SelectedValuePath="Id" SelectedValue = "{Binding Cliente.PaisId}"/>
         <TextBox x:Name="id" HorizontalAlignment="Left" Height="23" Margin="278,0,0,0" TextWrapping="Wrap" Text="{Binding Cliente.Id}" VerticalAlignment="Top" Width="45" Visibility="Hidden"/>
     </Grid>
 </Window>

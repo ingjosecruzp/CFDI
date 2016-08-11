@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="CFDI.Views.FacturasGridView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CFDI.Views"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="1024">
+    <DockPanel LastChildFill="True">
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="3,0,0,0">RFC:</TextBlock>
+                    <TextBox Width="164" Text="{Binding Rfc,UpdateSourceTrigger=LostFocus}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="3,0,0,0">Folio:</TextBlock>
+                    <TextBox Width="164" Text="{Binding Folio,UpdateSourceTrigger=LostFocus}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="3,0,0,0">Cliente:</TextBlock>
+                    <TextBox Width="164" Text="{Binding Cliente,UpdateSourceTrigger=LostFocus}" />
+                </StackPanel>
+                <Button Command="{Binding _Busqueda}" ToolTip="Filtra las facturas">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Iconos/appbar.magnify.back.png" Width="16" Height="16" />
+                        <TextBlock >Filtrar</TextBlock>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <DataGrid ItemsSource="{Binding GridFacturas}" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectFactura}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="CellEditEnding" >
+                    <i:InvokeCommandAction Command="{Binding CalcularGrid}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header=" " Binding="{Binding Check}" Width="40" IsReadOnly="False"/>
+                <DataGridTextColumn Header="Folio" Binding="{Binding Path=Folio}" IsReadOnly="False" />
+                <DataGridTextColumn Header="UUID" Binding="{Binding Path=UUID}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Rfc" Binding="{Binding Path=Rfc}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Cliente" Binding="{Binding Path=Cliente}" Width="200" IsReadOnly="True" />
+                <DataGridTextColumn Header="Serie" Binding="{Binding Path=Serie}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Monto" Binding="{Binding Path=Monto,StringFormat=C}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Fecha" Binding="{Binding Path=Fecha}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Estado" Binding="{Binding Path=Estado}" IsReadOnly="True" />
+                <DataGridTemplateColumn Header="PDF" IsReadOnly="false">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=DataContext._DescargarPfd,RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Cursor="Hand">
+                                <Image Source="/Iconos/appbar.page.file.pdf.tag.png" Cursor="Hand" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="XML" IsReadOnly="false">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=DataContext._DescargarDocumento,RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Cursor="Hand">
+                                <Image Source="/Iconos/appbar.page.xml.png" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

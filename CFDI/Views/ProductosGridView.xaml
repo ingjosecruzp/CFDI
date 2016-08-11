@@ -7,7 +7,16 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d">
     <DockPanel LastChildFill="True">
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Command="{Binding LlamarVentana}" Width="75" DockPanel.Dock="Top"/>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="{Binding LlamarVentana}" ToolTip="Filtra las facturas">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Iconos/appbar.math.plus.minus.png" Width="16" Height="16" />
+                        <TextBlock >              Nuevo</TextBlock>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
         <DataGrid x:Name="dgProductos" ItemsSource="{Binding Productos}" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectProducto}"  IsReadOnly="True">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick" >

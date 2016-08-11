@@ -40,10 +40,14 @@
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ReachFramework" />
+    <Reference Include="sapbusinessobjects.wpf.viewer, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="SAPBusinessObjects.WPF.ViewerShared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="Select.HtmlToPdf, Version=2.3.0.0, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018, processorArchitecture=MSIL">
       <HintPath>..\packages\Select.HtmlToPdf.2.3.0.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
       <Private>True</Private>
@@ -51,8 +55,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
@@ -64,9 +70,11 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="WpfAnimatedGif, Version=1.4.14.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WpfAnimatedGif.1.4.14\lib\net\WpfAnimatedGif.dll</HintPath>
       <Private>True</Private>
@@ -78,6 +86,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="grid\GridClientes.cs" />
+    <Compile Include="grid\GridFacturas.cs" />
     <Compile Include="grid\GridProductos.cs" />
     <Compile Include="Model\ClientesModel.cs" />
     <Compile Include="Model\DetalleFacturasModel.cs" />
@@ -99,6 +108,7 @@
       <DependentUpon>PdfFactura.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ViewModel\FacturasGridViewModel.cs" />
     <Compile Include="ViewModel\ProductosViewModel.cs" />
     <Compile Include="ViewModel\ProductosGridViewModel.cs" />
     <Compile Include="ViewModel\ClientesGridViewModel.cs" />
@@ -108,10 +118,15 @@
     <Compile Include="ViewModel\FacturasViewModel.cs" />
     <Compile Include="ViewModel\MenuViewModel.cs" />
     <Compile Include="ViewModel\ObservableObject .cs" />
+    <Compile Include="ViewModel\ReporteViewModel.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
     <Compile Include="ViewModel\ServicioWS.cs" />
+    <Compile Include="ViewModel\VentanaTemp.cs" />
     <Compile Include="Views\BusquedaView.xaml.cs">
       <DependentUpon>BusquedaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FacturasGridView.xaml.cs">
+      <DependentUpon>FacturasGridView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductosView.xaml.cs">
       <DependentUpon>ProductosView.xaml</DependentUpon>
@@ -134,6 +149,9 @@
     <Compile Include="Views\ProgressBarView.xaml.cs">
       <DependentUpon>ProgressBarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ReporteView.xaml.cs">
+      <DependentUpon>ReporteView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -147,6 +165,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\BusquedaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FacturasGridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProgressBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReporteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -226,6 +252,33 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Iconos\load.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Iconos\appbar.clipboard.variant.text.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Iconos\appbar.magnify.back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Iconos\appbar.page.add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Iconos\appbar.save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Iconos\appbar.math.plus.minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Iconos\appbar.app.plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Iconos\appbar.stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Iconos\appbar.page.file.pdf.tag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Iconos\appbar.page.xml.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Select.HtmlToPdf.2.3.0.0\build\Select.HtmlToPdf.targets" Condition="Exists('..\packages\Select.HtmlToPdf.2.3.0.0\build\Select.HtmlToPdf.targets')" />

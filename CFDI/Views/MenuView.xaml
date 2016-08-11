@@ -16,6 +16,9 @@
         <DataTemplate DataType="{x:Type ViewModel:ProductosGridViewModel}">
             <Views:ProductosGridView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:FacturasGridViewModel}">
+            <Views:FacturasGridView/>
+        </DataTemplate>
     </UserControl.Resources>
     <DockPanel LastChildFill="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
         <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" DockPanel.Dock="Left">
@@ -49,9 +52,19 @@
                     </BulletDecorator>
                 </Button>
             </ListBoxItem>
+            <ListBoxItem Width="190">
+                <Button Background="RoyalBlue"  Command="{Binding HolaMundo}" CommandParameter="ListaFactura" Cursor="Hand">
+                    <BulletDecorator Width="178">
+                        <BulletDecorator.Bullet>
+                            <Image Source="/Iconos/appbar.clipboard.variant.text.png" Width="64" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        </BulletDecorator.Bullet>
+                        <TextBlock Margin="10,0,21,0" Text="Listar Facturas" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="White" />
+                    </BulletDecorator>
+                </Button>
+            </ListBoxItem>
         </ListBox>
         <ScrollViewer>
-        <ContentControl x:Name="Principal" Content="{Binding SelectedViewModel}" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
-            </ScrollViewer>
+            <ContentControl x:Name="Principal" Content="{Binding SelectedViewModel}" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+        </ScrollViewer>
     </DockPanel>
 </UserControl>

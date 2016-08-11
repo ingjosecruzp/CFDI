@@ -57,7 +57,6 @@ namespace CFDI.ViewModel
             {
                 return _ProductoNuevo;
             }
-
             set
             {
                 if (_ProductoNuevo != value)

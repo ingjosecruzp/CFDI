@@ -7,8 +7,18 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d">
     <DockPanel LastChildFill="True">
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Command="{Binding LlamarVentana}" Width="75" DockPanel.Dock="Top"/>
-        <DataGrid x:Name="dgClientes" ItemsSource="{Binding Clientes}" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectCliente}"  IsReadOnly="True">
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="{Binding LlamarVentana}" ToolTip="Filtra las facturas">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Iconos/appbar.math.plus.minus.png" Width="16" Height="16" />
+                        <TextBlock > Nuevo</TextBlock>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <ToolBarTray />
+        <DataGrid x:Name="dgClientes" AlternationCount="2" AlternatingRowBackground="AliceBlue" ItemsSource="{Binding Clientes}" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectCliente}"  IsReadOnly="True" Background="White">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick" >
                     <i:InvokeCommandAction Command="{Binding ModificarCliente}" />

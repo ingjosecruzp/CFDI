@@ -29,12 +29,14 @@ namespace CFDI.ViewModel
         }
         private void OnDelete(object parameter)
         {
-            if(parameter.ToString()=="Facturas")
-                SelectedViewModel = new FacturasViewModel();     
+            if (parameter.ToString() == "Facturas")
+                SelectedViewModel = new FacturasViewModel();
             else if (parameter.ToString() == "Clientes")
                 SelectedViewModel = new ClientesGridViewModel();
             else if (parameter.ToString() == "Productos")
                 SelectedViewModel = new ProductosGridViewModel();
+            else if (parameter.ToString() == "ListaFactura")
+                SelectedViewModel = new FacturasGridViewModel();
         }
     }
     public class TabItem

@@ -17,6 +17,7 @@ namespace CFDI.ViewModel
     {
         //Inician Atributos
         public DelegateCommand GuardarCliente { get; set; }
+        public DelegateCommand _CerrarVentana { get; set; }
         private ObservableCollection<EstadosModel> _Estados;
         private ObservableCollection<MunicipiosModel> _Municipios;
         private ObservableCollection<PaisesModel> _Paises;
@@ -124,6 +125,7 @@ namespace CFDI.ViewModel
             _SelectPais = new PaisesModel();
             _ClienteNuevo = new ClientesModel();
             GuardarCliente = new DelegateCommand(Guardar);
+            _CerrarVentana = new DelegateCommand(CerrarVentana);
             LoadPaises();
             LoadEstados();
         }
@@ -150,6 +152,10 @@ namespace CFDI.ViewModel
         {
             ServicioWS WS = new ServicioWS("WsEstados.svc", "getEstados", null, typeof(ObservableCollection<EstadosModel>), null);
             Estados = (ObservableCollection<EstadosModel>)WS.Peticion();
+        }
+        public void CerrarVentana(object parameter)
+        {
+            //Application.Current.MainWindow.Close();
         }
         private void Guardar(object parameter)
         {

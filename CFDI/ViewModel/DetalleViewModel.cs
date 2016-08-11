@@ -26,6 +26,8 @@ namespace CFDI.ViewModel
             }
             set
             {
+                if (_Detalle.ProductoId != value)
+                        PrecioUnitario = 0;
                 _Detalle.ProductoId = value;
                 RaisePropertyChangedEvent("ProductoId");
             }
