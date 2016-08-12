@@ -30,7 +30,7 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <DataGrid ItemsSource="{Binding GridFacturas}" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectFactura}">
+        <DataGrid ItemsSource="{Binding GridFacturas}" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectFactura}" CanUserAddRows="False" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CellEditEnding" >
                     <i:InvokeCommandAction Command="{Binding CalcularGrid}" />
@@ -58,7 +58,7 @@
                 <DataGridTemplateColumn Header="XML" IsReadOnly="false">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=DataContext._DescargarDocumento,RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Cursor="Hand">
+                            <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=DataContext._DescargarXml,RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Cursor="Hand">
                                 <Image Source="/Iconos/appbar.page.xml.png" />
                             </Button>
                         </DataTemplate>

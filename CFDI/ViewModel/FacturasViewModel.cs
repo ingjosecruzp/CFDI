@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using Microsoft.Win32;
+using CFDI.Views;
 
 namespace CFDI.ViewModel
 {
@@ -20,6 +21,7 @@ namespace CFDI.ViewModel
         public DelegateCommand BuscarP { get; set; }
         public DelegateCommand _GuardarFactura { get; set; }
         public DelegateCommand _CerrarFactura { get; set; }
+        public DelegateCommand _NuevoProducto { get; set; }
         private ObservableCollection<ClientesModel> _Clientes;
         private ClientesModel _SelectCliente;
         private ObservableCollection<EstadosModel> _Estados;
@@ -391,6 +393,7 @@ namespace CFDI.ViewModel
             Detalles = new ObservableCollection<DetalleViewModel>();
             BusquedaProducto = new DelegateCommand(BProducto);
             BuscarP = new DelegateCommand(WsBuscarProducto);
+            _NuevoProducto = new DelegateCommand(NuevoProducto);
             _GuardarFactura = new DelegateCommand(GuardarFactura);
             _CerrarFactura = new DelegateCommand(CerrarFactura);
             CalcularGrid = new DelegateCommand(Calculos);
@@ -404,6 +407,23 @@ namespace CFDI.ViewModel
             LoadSeries();
             LoadUnidades();
             LoadProductos();
+        }
+        public void NuevoProducto(object parameter)
+        {
+            ProductosView FrmProductos = new ProductosView();
+            ProductosViewModel ViewModelProductos = new ProductosViewModel();
+            FrmProductos.DataContext = ViewModelProductos;
+            FrmProductos.Activate();
+            FrmProductos.ShowDialog();
+            LoadProductos();
+            if(ViewModelProductos.Producto.Id != 0)
+            { 
+                Detalles.Add(new DetalleViewModel{  
+                                ProductoId= ViewModelProductos.Producto.Id,
+                                UnidadId= ViewModelProductos.Producto.UnidadId,
+                                PrecioUnitario= ViewModelProductos.Producto.PrecioUnitario,
+                });
+            }
         }
         public void Calculos(object parameter)
         {

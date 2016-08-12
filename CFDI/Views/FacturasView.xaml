@@ -56,7 +56,7 @@
         <TextBox x:Name="txtlugarexpedicion" Text = "{Binding Factura.LugarExpedicion}" Height="23" Margin="389.517,271.05,387.533,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy17" Content="Tipo de Pago" Foreground="{Binding Path=Color}" HorizontalAlignment="Right" Margin="0,245.09,302.825,0" VerticalAlignment="Top" RenderTransformOrigin="3.906,1.311"/>
         <ComboBox x:Name="txttipopago" HorizontalAlignment="Right" Margin="0,272.09,187.482,0" Width="195.05" VerticalAlignment="Top" ItemsSource="{Binding TipoPagos}" DisplayMemberPath="Nombre"  SelectedItem="{Binding SelectTipoPagos}" SelectedValuePath="Id" SelectedValue = "{Binding Factura.TipoPago}" />
-        <DataGrid Margin="10,318,10,230" ItemsSource="{Binding Detalles,IsAsync=True}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserReorderColumns="False" CanUserSortColumns="False" SelectedItem = "{Binding SelectDetalleProductos}" >
+        <DataGrid Margin="10,318,10,230" ItemsSource="{Binding Detalles}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserReorderColumns="False" CanUserSortColumns="False" SelectedItem = "{Binding SelectDetalleProductos}" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CellEditEnding" >
                     <i:InvokeCommandAction Command="{Binding CalcularGrid}" />
@@ -90,7 +90,7 @@
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
-                <DataGridComboBoxColumn Header="Descripción" SelectedValueBinding="{Binding ProductoId,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Id" DisplayMemberPath="Descripcion" Width="480" >
+                <DataGridComboBoxColumn Header="Descripción" SelectedValueBinding="{Binding ProductoId,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Id" DisplayMemberPath="Descripcion" Width="450" >
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
                             <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.Productos}"/>
@@ -103,6 +103,15 @@
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
+                <DataGridTemplateColumn Header="" IsReadOnly="false">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Background="Transparent" BorderBrush="Transparent" Command="{Binding Path=DataContext._NuevoProducto,RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Cursor="Hand">
+                                <Image Source="/Iconos/appbar.math.plus.minus.png" Cursor="Hand" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Precio" Binding="{Binding Path=PrecioUnitario,Mode = TwoWay,UpdateSourceTrigger=LostFocus,StringFormat=C}" Width="100"/>
                 <DataGridTextColumn Header="Descuento" Binding="{Binding Path=Descuento,Mode = TwoWay,UpdateSourceTrigger=LostFocus,StringFormat='\{0\}%'}" Width="80"/>
                 <DataGridTextColumn Header="Importe" Binding="{Binding Path=Importe,Mode = TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat=C}" Width="80" IsReadOnly="True" />

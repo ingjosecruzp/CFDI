@@ -17,6 +17,7 @@ namespace CFDI.ViewModel
     {
         public DelegateCommand _Busqueda { get; set; }
         public DelegateCommand _DescargarPfd { get; set; }
+        public DelegateCommand _DescargarXml { get; set; }
         private ObservableCollection<GridFacturas> _GridFacturas;
         private GridFacturas _SelectFactura;
         private string _Rfc;
@@ -97,25 +98,49 @@ namespace CFDI.ViewModel
         {
             _Busqueda = new DelegateCommand(Busqueda);
             _DescargarPfd = new DelegateCommand(DescargarPfd);
+            _DescargarXml = new DelegateCommand(DescargarXml);
             Filtro = new string[3];
             this.CargarFacturas();
         }
-        public void DescargarPfd(object parameter)
+        public void DescargarXml(object parameter)
         {
             try
-            { 
+            {
                 string folio = SelectFactura.Serie + SelectFactura.Folio;
                 SaveFileDialog SaveFileDialog1 = new SaveFileDialog();
+                SaveFileDialog1.Filter = "Xml Document|*.xml";
                 SaveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 SaveFileDialog1.FileName = folio;
                 if (SaveFileDialog1.ShowDialog() == true)
                 {
-                    ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "getFacturaPdf", folio , typeof(RespuestaTimbrado), "folio");
+                    ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "getFacturaPdf", folio, typeof(RespuestaTimbrado), "folio");
                     RespuestaTimbrado respuesta = (RespuestaTimbrado)WS.Peticion();
 
                     if (respuesta.status == "ok")
                     {
                         string ruta = Path.GetDirectoryName(SaveFileDialog1.FileName);
+                        Base64Decode(respuesta.xml, ruta + "\\", folio + ".xml");
+                    }
+                    else
+                        throw new Exception(respuesta.msj);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        public void DescargarPfd(object parameter)
+        {
+            try
+            {
+                string folio = SelectFactura.Serie + SelectFactura.Folio;
+                    ServicioWS WS = new ServicioWS("WsFacturasCFDI.svc", "getFacturaPdf", folio , typeof(RespuestaTimbrado), "folio");
+                    RespuestaTimbrado respuesta = (RespuestaTimbrado)WS.Peticion();
+
+                    if (respuesta.status == "ok")
+                    {
+                        string ruta = Path.GetDirectoryName(Path.GetTempPath());
                         Base64Decode(respuesta.xml, ruta + "\\", folio + ".xml");
                         Base64Decode(respuesta.cbb, ruta + "\\", folio + ".bmp");
                         ReporteView reporte = new ReporteView(ruta + "\\" + folio);
@@ -123,7 +148,6 @@ namespace CFDI.ViewModel
                     }
                     else
                         throw new Exception(respuesta.msj);
-                }
             }
             catch(Exception ex)
             {

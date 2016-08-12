@@ -54,12 +54,15 @@ namespace CFDI.ViewModel
         }
         private void Modificar(object parameter)
         {
-            ProductosViewModel productosViewModel = new ProductosViewModel();
-            ProductosView FrmProductos = new ProductosView();
-            FrmProductos.DataContext = productosViewModel;
-            productosViewModel.CargarForm(SelectProducto.Id);
-            FrmProductos.ShowDialog();
-            LoadProductos();
+            if(SelectProducto != null)
+            { 
+                ProductosViewModel productosViewModel = new ProductosViewModel();
+                ProductosView FrmProductos = new ProductosView();
+                FrmProductos.DataContext = productosViewModel;
+                productosViewModel.CargarForm(SelectProducto.Id);
+                FrmProductos.ShowDialog();
+                LoadProductos();
+            }
         }
         private void Llamar(object parameter)
         {
