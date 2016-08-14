@@ -22,6 +22,7 @@ namespace CFDI.ViewModel
         public DelegateCommand _GuardarFactura { get; set; }
         public DelegateCommand _CerrarFactura { get; set; }
         public DelegateCommand _NuevoProducto { get; set; }
+        public DelegateCommand _NuevoCliente { get; set; }
         private ObservableCollection<ClientesModel> _Clientes;
         private ClientesModel _SelectCliente;
         private ObservableCollection<EstadosModel> _Estados;
@@ -394,6 +395,7 @@ namespace CFDI.ViewModel
             BusquedaProducto = new DelegateCommand(BProducto);
             BuscarP = new DelegateCommand(WsBuscarProducto);
             _NuevoProducto = new DelegateCommand(NuevoProducto);
+            _NuevoCliente = new DelegateCommand(NuevoCliente);
             _GuardarFactura = new DelegateCommand(GuardarFactura);
             _CerrarFactura = new DelegateCommand(CerrarFactura);
             CalcularGrid = new DelegateCommand(Calculos);
@@ -408,12 +410,28 @@ namespace CFDI.ViewModel
             LoadUnidades();
             LoadProductos();
         }
+        public void NuevoCliente(object parameter)
+        {
+            ClientesView FrmCliente = new ClientesView();
+            ClientesViewModel ViewModelCliente = new ClientesViewModel();
+            FrmCliente.DataContext = ViewModelCliente;
+            FrmCliente.ShowDialog();
+            LoadClientes();
+            //Si agrego un cliente nuevo y no presiono el boton cerrar
+            if(ViewModelCliente.Cliente.Id!=0)
+            { 
+                SelectCliente = ViewModelCliente.Cliente;
+                //Cliente= ViewModelCliente.Cliente;
+                Factura.ClienteId = ViewModelCliente.Cliente.Id;
+                //SelectCliente.Id = ViewModelCliente.Cliente.Id;
+                RaisePropertyChangedEvent("Factura");
+            }
+        }
         public void NuevoProducto(object parameter)
         {
             ProductosView FrmProductos = new ProductosView();
             ProductosViewModel ViewModelProductos = new ProductosViewModel();
             FrmProductos.DataContext = ViewModelProductos;
-            FrmProductos.Activate();
             FrmProductos.ShowDialog();
             LoadProductos();
             if(ViewModelProductos.Producto.Id != 0)

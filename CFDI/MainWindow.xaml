@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CFDI"
         xmlns:Views="clr-namespace:CFDI.Views"
         xmlns:ViewModel="clr-namespace:CFDI.ViewModel"
-        xmlns:Properties="clr-namespace:CFDI.Properties" x:Class="CFDI.MainWindow"
+        xmlns:Properties="clr-namespace:CFDI.Properties" x:Name="FrmMain" x:Class="CFDI.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Window.Resources>

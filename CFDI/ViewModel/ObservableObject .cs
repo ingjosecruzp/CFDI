@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace CFDI.ViewModel
@@ -20,6 +21,14 @@ namespace CFDI.ViewModel
             var handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public void CerrarFormulario(string Ventana)
+        {
+            foreach(Window window in Application.Current.Windows)
+            {
+                if(window.Name==Ventana)
+                    window.Close();
+            }
         }
     }
 }

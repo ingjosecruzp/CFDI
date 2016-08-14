@@ -155,6 +155,7 @@ namespace CFDI.ViewModel
         }
         public void CerrarVentana(object parameter)
         {
+            CerrarFormulario("FrmClientes");
             //Application.Current.MainWindow.Close();
         }
         private void Guardar(object parameter)
@@ -168,6 +169,7 @@ namespace CFDI.ViewModel
                 else
                     WS = new ServicioWS("WsClientes.svc", "updateCliente", Cliente, typeof(ClientesModel), "cliente");
                 Cliente = (ClientesModel)WS.Peticion();
+                CerrarVentana("FrmClientes");
             }
             else
                 MessageBox.Show("Antes de continuar, debe de corregir los erros señalados","Error",MessageBoxButton.OK,MessageBoxImage.Error);

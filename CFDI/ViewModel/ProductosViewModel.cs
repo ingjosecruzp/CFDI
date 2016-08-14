@@ -127,6 +127,7 @@ namespace CFDI.ViewModel
                         WS = new ServicioWS("WsProductos.svc", "updateProducto", Producto, typeof(ProductosModel), "producto");
                     Producto = (ProductosModel)WS.Peticion();
                     Color = "Black";
+                    CerrarFormulario("FrmProductos");
                 }
                 else
                 {
