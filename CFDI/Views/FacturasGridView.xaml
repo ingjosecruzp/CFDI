@@ -30,7 +30,7 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <DataGrid ItemsSource="{Binding GridFacturas}" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectFactura}" CanUserAddRows="False" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <DataGrid ItemsSource="{Binding GridFacturas}" AlternationCount="2" AlternatingRowBackground="AliceBlue" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectFactura}" CanUserAddRows="False" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CellEditEnding" >
                     <i:InvokeCommandAction Command="{Binding CalcularGrid}" />

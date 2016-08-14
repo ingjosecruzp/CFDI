@@ -128,7 +128,7 @@ namespace CFDI.ViewModel
                     // When the window closes, shut down the dispatcher
                     Barra.Closed += (s, e) =>
                        Dispatcher.CurrentDispatcher.BeginInvokeShutdown(DispatcherPriority.Background);
-
+                    Barra.Topmost = true;
                     Barra.Show();
 
                     // Start the Dispatcher Processing

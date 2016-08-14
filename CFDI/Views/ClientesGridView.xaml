@@ -18,7 +18,7 @@
             </ToolBar>
         </ToolBarTray>
         <ToolBarTray />
-        <DataGrid x:Name="dgClientes" AlternationCount="2" AlternatingRowBackground="AliceBlue" ItemsSource="{Binding Clientes}" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectCliente}"  IsReadOnly="True" Background="White">
+        <DataGrid x:Name="dgClientes" AlternationCount="2" AlternatingRowBackground="AliceBlue" ItemsSource="{Binding Clientes}" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectCliente}"  IsReadOnly="True">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick" >
                     <i:InvokeCommandAction Command="{Binding ModificarCliente}" />

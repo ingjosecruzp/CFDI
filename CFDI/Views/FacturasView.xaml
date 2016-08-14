@@ -56,7 +56,7 @@
         <TextBox x:Name="txtlugarexpedicion" Text = "{Binding Factura.LugarExpedicion}" Height="23" Margin="389.517,271.05,387.533,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy17" Content="Tipo de Pago" Foreground="{Binding Path=Color}" HorizontalAlignment="Right" Margin="0,245.09,302.825,0" VerticalAlignment="Top" RenderTransformOrigin="3.906,1.311"/>
         <ComboBox x:Name="txttipopago" HorizontalAlignment="Right" Margin="0,272.09,187.482,0" Width="195.05" VerticalAlignment="Top" ItemsSource="{Binding TipoPagos}" DisplayMemberPath="Nombre"  SelectedItem="{Binding SelectTipoPagos}" SelectedValuePath="Id" SelectedValue = "{Binding Factura.TipoPago}" />
-        <DataGrid Margin="10,318,10,230" ItemsSource="{Binding Detalles}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserReorderColumns="False" CanUserSortColumns="False" SelectedItem = "{Binding SelectDetalleProductos}" >
+        <DataGrid Margin="10,318,10,112" AlternationCount="2" AlternatingRowBackground="AliceBlue" ItemsSource="{Binding Detalles}" AutoGenerateColumns="False" CanUserAddRows="True" CanUserReorderColumns="False" CanUserSortColumns="False" SelectedItem = "{Binding SelectDetalleProductos}" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CellEditEnding" >
                     <i:InvokeCommandAction Command="{Binding CalcularGrid}" />

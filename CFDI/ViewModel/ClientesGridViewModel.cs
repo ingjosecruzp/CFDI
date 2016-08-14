@@ -43,6 +43,9 @@ namespace CFDI.ViewModel
             ClientesView FrmClientes = new ClientesView();
             FrmClientes.DataContext = clientesViewModel;
             clientesViewModel.CargarForm(SelectCliente.Id);
+            //FrmClientes.ShowInTaskbar = false;
+            //FrmClientes.Topmost = true;
+            FrmClientes.Owner = Application.Current.Windows[0];
             FrmClientes.ShowDialog();
         }
         private void Llamar(object parameter)
