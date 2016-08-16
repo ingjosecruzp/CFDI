@@ -1,0 +1,34 @@
+﻿<Window x:Class="CFDI.Views.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CFDI.Views"
+        mc:Ignorable="d"
+        Title="LoginView" Height="157.446" Width="330.851" WindowStartupLocation="CenterScreen" Name="FrmLogin">
+    <Grid>
+        <Border BorderBrush="AliceBlue" BorderThickness="5" CornerRadius="6" >
+        </Border>
+        <ToolBarTray Height="28" VerticalAlignment="Top">
+            <ToolBar>
+                <Button Command="{Binding _Entrar}" CommandParameter="{Binding ElementName=txtpassword}" ToolTip="Guardar Cliente">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Iconos/appbar.save.png" Width="16" Height="16" />
+                        <TextBlock ><Run Text="Entrar"/></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding _CerrarVentana}" ToolTip="Guardar Cliente">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Iconos/appbar.stop.png" Width="16" Height="16" />
+                        <TextBlock ><Run Text="Cerrar"/></TextBlock>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Label x:Name="label" Content="Usuario" HorizontalAlignment="Left" Margin="30,43,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label1" Content="Contraseña" HorizontalAlignment="Left" Margin="15,77,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="85,43,0,0" TextWrapping="Wrap" Text="{Binding Path=Usuario,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="218"/>
+        <PasswordBox x:Name="txtpassword" HorizontalAlignment="Left" Height="23" Margin="85,77,0,0" VerticalAlignment="Top" Width="218" PasswordChar="●"/>
+
+    </Grid>
+</Window>

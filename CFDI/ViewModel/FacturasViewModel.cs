@@ -23,6 +23,7 @@ namespace CFDI.ViewModel
         public DelegateCommand _CerrarFactura { get; set; }
         public DelegateCommand _NuevoProducto { get; set; }
         public DelegateCommand _NuevoCliente { get; set; }
+        public DelegateCommand _EliminarProducto { get; set; }
         private ObservableCollection<ClientesModel> _Clientes;
         private ClientesModel _SelectCliente;
         private ObservableCollection<EstadosModel> _Estados;
@@ -398,6 +399,7 @@ namespace CFDI.ViewModel
             _NuevoCliente = new DelegateCommand(NuevoCliente);
             _GuardarFactura = new DelegateCommand(GuardarFactura);
             _CerrarFactura = new DelegateCommand(CerrarFactura);
+            _EliminarProducto = new DelegateCommand(EliminarProducto);
             CalcularGrid = new DelegateCommand(Calculos);
             Factura = new FacturasModel();
             _Color = "Black";
@@ -410,16 +412,23 @@ namespace CFDI.ViewModel
             LoadUnidades();
             LoadProductos();
         }
+        public void EliminarProducto(object parameter)
+        {
+            Detalles.Remove(SelectDetalleProductos);
+            RaisePropertyChangedEvent("Subtotal");
+            RaisePropertyChangedEvent("Iva");
+            RaisePropertyChangedEvent("Total");
+        }
         public void NuevoCliente(object parameter)
         {
             ClientesView FrmCliente = new ClientesView();
             ClientesViewModel ViewModelCliente = new ClientesViewModel();
             FrmCliente.DataContext = ViewModelCliente;
             FrmCliente.ShowDialog();
-            LoadClientes();
             //Si agrego un cliente nuevo y no presiono el boton cerrar
             if(ViewModelCliente.Cliente.Id!=0)
-            { 
+            {
+                LoadClientes();
                 SelectCliente = ViewModelCliente.Cliente;
                 //Cliente= ViewModelCliente.Cliente;
                 Factura.ClienteId = ViewModelCliente.Cliente.Id;
@@ -433,9 +442,9 @@ namespace CFDI.ViewModel
             ProductosViewModel ViewModelProductos = new ProductosViewModel();
             FrmProductos.DataContext = ViewModelProductos;
             FrmProductos.ShowDialog();
-            LoadProductos();
             if(ViewModelProductos.Producto.Id != 0)
-            { 
+            {
+                LoadProductos();
                 Detalles.Add(new DetalleViewModel{  
                                 ProductoId= ViewModelProductos.Producto.Id,
                                 UnidadId= ViewModelProductos.Producto.UnidadId,
@@ -555,6 +564,9 @@ namespace CFDI.ViewModel
                         {
                             GrabarArchivos(Respueta);
                             Color = "Black";
+                            //Factura = null;
+                            Factura = new FacturasModel();
+                            Detalles = new ObservableCollection<DetalleViewModel>();
                         }
                         else
                             throw new Exception(Respueta.msj);

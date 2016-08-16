@@ -1,4 +1,5 @@
 ﻿using CFDI.Model;
+using CFDI.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,8 +25,18 @@ namespace CFDI.ViewModel
         }
         public MenuViewModel()
         {
+            TokenModel.Nombre = "";
             HolaMundo = new DelegateCommand(OnDelete);
             Tabs = new ObservableCollection<TabItem>();
+            if (TokenModel.Nombre == null || TokenModel.Nombre == "")
+            {
+                LoginView FrmLogin = new LoginView();
+                LoginViewModel loginViewModel = new LoginViewModel();
+                FrmLogin.DataContext = loginViewModel;
+                FrmLogin.ShowDialog();
+                if (TokenModel.Nombre == "050" || TokenModel.Nombre=="")
+                        CerrarFormulario("FrmMain");
+            }
         }
         private void OnDelete(object parameter)
         {

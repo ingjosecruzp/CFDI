@@ -1,4 +1,5 @@
-﻿using CFDI.Views;
+﻿using CFDI.Model;
+using CFDI.Views;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
@@ -152,6 +153,7 @@ namespace CFDI.ViewModel
                 });
                 httpWebRequest.Method = JSONmethod;
                 httpWebRequest.ContentType = JSONContentType;
+                httpWebRequest.Headers.Add("Token",TokenModel.Nombre);
                 byte[] bytes = Encoding.UTF8.GetBytes(text);
                 Stream requestStream = httpWebRequest.GetRequestStream();
                 requestStream.Write(bytes, 0, bytes.Length);
