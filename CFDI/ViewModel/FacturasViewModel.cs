@@ -567,6 +567,7 @@ namespace CFDI.ViewModel
                             //Factura = null;
                             Factura = new FacturasModel();
                             Detalles = new ObservableCollection<DetalleViewModel>();
+                            SelectSeries = new SeriesModel();
                         }
                         else
                             throw new Exception(Respueta.msj);
@@ -630,7 +631,8 @@ namespace CFDI.ViewModel
                 Base64Decode(Respueta.cbb, ruta + "\\", Respueta.folio + ".bmp");
 
                 ReportDocument report = new ReportDocument();
-                report.Load(@"C:\Users\jparedes\Documents\Visual Studio 2015\Projects\CFDI\CFDI\Reportes\PdfFactura.rpt");
+                //report.Load(@"C:\Users\jparedes\Documents\Visual Studio 2015\Projects\CFDI\CFDI\Reportes\PdfFactura.rpt");
+                report.Load(Directory.GetCurrentDirectory() + @"\Reportes\PdfFactura.rpt");
 
                 DataSet reportData = new DataSet();
                 reportData.ReadXml(ruta + "\\" + Respueta.folio + ".xml");

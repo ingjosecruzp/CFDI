@@ -22,30 +22,53 @@
                     <TextBlock Margin="3,0,0,0">Cliente:</TextBlock>
                     <TextBox Width="164" Text="{Binding Cliente,UpdateSourceTrigger=LostFocus}" />
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="3,0,0,0"></TextBlock>
+                    <DatePicker SelectedDate="{Binding FechaI, Mode=TwoWay,StringFormat=yyyy-MM-dd}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="3,0,0,0"></TextBlock>
+                    <DatePicker SelectedDate="{Binding FechaF, Mode=TwoWay,StringFormat=yyyy-MM-dd}"/>
+                </StackPanel>
                 <Button Command="{Binding _Busqueda}" ToolTip="Filtra las facturas">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Iconos/appbar.magnify.back.png" Width="16" Height="16" />
                         <TextBlock >Filtrar</TextBlock>
                     </StackPanel>
                 </Button>
+                <Button Command="{Binding _CancelarFactura}" ToolTip="Cancelar facturas seleccionadas">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Iconos/appbar.close.png" Width="16" Height="16" />
+                        <TextBlock >Cancelar facturas</TextBlock>
+                    </StackPanel>
+                </Button>
             </ToolBar>
         </ToolBarTray>
-        <DataGrid ItemsSource="{Binding GridFacturas}" AlternationCount="2" AlternatingRowBackground="AliceBlue" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectFactura}" CanUserAddRows="False" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <DataGrid ItemsSource="{Binding Facturas}" AlternationCount="2" AlternatingRowBackground="AliceBlue" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" SelectedItem = "{Binding SelectFactura}" CanUserAddRows="False" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CellEditEnding" >
                     <i:InvokeCommandAction Command="{Binding CalcularGrid}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header=" " Binding="{Binding Check}" Width="40" IsReadOnly="False"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.Header>
+                        <CheckBox IsChecked="{Binding Path=DataContext.SelectAll,RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"></CheckBox>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate>
+                            <CheckBox HorizontalAlignment="Center" IsChecked="{Binding Path=DataContext.Checkon,RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Folio" Binding="{Binding Path=Folio}" IsReadOnly="False" />
                 <DataGridTextColumn Header="UUID" Binding="{Binding Path=UUID}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Rfc" Binding="{Binding Path=Rfc}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Cliente" Binding="{Binding Path=Cliente}" Width="200" IsReadOnly="True" />
                 <DataGridTextColumn Header="Serie" Binding="{Binding Path=Serie}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Monto" Binding="{Binding Path=Monto,StringFormat=C}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Fecha" Binding="{Binding Path=Fecha}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Estado" Binding="{Binding Path=Estado}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Fecha" Binding="{Binding Path=FechaTimbrado}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Estado" Binding="{Binding Path=Estado}" Foreground="Red" IsReadOnly="True" />
                 <DataGridTemplateColumn Header="PDF" IsReadOnly="false">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

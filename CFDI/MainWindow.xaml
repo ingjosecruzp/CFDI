@@ -8,14 +8,13 @@
         xmlns:ViewModel="clr-namespace:CFDI.ViewModel"
         xmlns:Properties="clr-namespace:CFDI.Properties" x:Name="FrmMain" x:Class="CFDI.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="CFDI" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Window.Resources>
         <ViewModel:MenuViewModel x:Key="MenuViewModel" />
         <Views:MenuView x:Key="MenuView" />
     </Window.Resources>
     <DockPanel Loaded="DockPanel_Loaded" LastChildFill="True">
-        <Label Content="Dock Panel Layout Demo" FontSize="15" FontWeight="Bold" Background="LightBlue" Foreground="Blue" DockPanel.Dock="Top"/>
-        <Label Content="Footer" FontSize="15" FontWeight="Bold" Background="LightGray" DockPanel.Dock="Bottom" />
+        <Label Content="" FontSize="15" FontWeight="Bold" Background="LightBlue" Foreground="Blue" DockPanel.Dock="Top"/>
         <ContentControl x:Name="MenuLtl" Content="{StaticResource MenuView}" DataContext="{StaticResource MenuViewModel}" />
     </DockPanel>
 </Window>

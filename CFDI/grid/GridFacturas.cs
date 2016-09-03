@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +18,7 @@ namespace CFDI.grid
         public string Cliente { get; set; }
         public string Serie { get; set; }
         public decimal Monto { get; set; }
-        public DateTime Fecha { get; set; }
+        public DateTime FechaTimbrado { get; set; }
         public string Estado { get; set; }
     }
 }

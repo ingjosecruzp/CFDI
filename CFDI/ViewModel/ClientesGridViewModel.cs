@@ -35,6 +35,7 @@ namespace CFDI.ViewModel
         {
             LlamarVentana = new DelegateCommand(Llamar);
             ModificarCliente = new DelegateCommand(Modificar);
+            UsuarioModel.Nombre = "okokokokok";
             LoadClientes();
         }
         private void Modificar(object parameter)

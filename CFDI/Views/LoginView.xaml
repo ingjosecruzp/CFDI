@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CFDI.Views"
         mc:Ignorable="d"
-        Title="LoginView" Height="157.446" Width="330.851" WindowStartupLocation="CenterScreen" Name="FrmLogin">
+        Title="Inicio" Height="157.446" Width="330.851" WindowStartupLocation="CenterScreen" Name="FrmLogin">
     <Grid>
         <Border BorderBrush="AliceBlue" BorderThickness="5" CornerRadius="6" >
         </Border>

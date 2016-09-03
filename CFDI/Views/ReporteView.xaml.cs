@@ -31,8 +31,8 @@ namespace CFDI.Views
             InitializeComponent();
 
             ReportDocument report = new ReportDocument();
-            report.Load(@"C:\Users\jparedes\Documents\Visual Studio 2015\Projects\CFDI\CFDI\Reportes\PdfFactura.rpt");
-
+            report.Load(Directory.GetCurrentDirectory() + @"\Reportes\PdfFactura.rpt");
+            
             DataSet reportData = new DataSet();
             reportData.ReadXml(folio + ".xml");
             report.SetDataSource(reportData);

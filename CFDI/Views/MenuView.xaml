@@ -21,7 +21,36 @@
         </DataTemplate>
     </UserControl.Resources>
     <DockPanel LastChildFill="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
-        <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" DockPanel.Dock="Left">
+                <StatusBar DockPanel.Dock="Bottom">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock>
+                    <Run Text="Usuario: " FontWeight="Bold" />
+                    <Run Text="{Binding UsuarioFirmado}" />
+                </TextBlock>
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2">
+                
+            </StatusBarItem>
+            <Separator Grid.Column="3" />
+            <StatusBarItem Grid.Column="4">
+                <ProgressBar Value="50" Width="190" Height="16" IsIndeterminate="True" />
+            </StatusBarItem>
+        </StatusBar>
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListBoxItem Width="190">
                 <Button Background="OliveDrab" Command="{Binding HolaMundo}"  CommandParameter="Facturas" Cursor="Hand">
                     <BulletDecorator Width="176">
@@ -63,8 +92,6 @@
                 </Button>
             </ListBoxItem>
         </ListBox>
-        <ScrollViewer>
-            <ContentControl x:Name="Principal" Content="{Binding SelectedViewModel}" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
-        </ScrollViewer>
+        <ContentControl x:Name="Principal" Content="{Binding SelectedViewModel}" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
     </DockPanel>
 </UserControl>

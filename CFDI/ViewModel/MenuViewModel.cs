@@ -23,6 +23,16 @@ namespace CFDI.ViewModel
             get { return selectedViewModel; }
             set { selectedViewModel = value; RaisePropertyChangedEvent("SelectedViewModel"); }
         }
+
+        public string UsuarioFirmado
+        {
+            get
+            {
+                return UsuarioModel.Nombre;
+            }
+            set {}
+        }
+
         public MenuViewModel()
         {
             TokenModel.Nombre = "";
