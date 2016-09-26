@@ -102,6 +102,7 @@
     </ApplicationDefinition>
     <Compile Include="grid\GridClientes.cs" />
     <Compile Include="grid\GridFacturas.cs" />
+    <Compile Include="grid\GridLoginEmpresas.cs" />
     <Compile Include="grid\GridProductos.cs" />
     <Compile Include="Model\ClientesModel.cs" />
     <Compile Include="Model\DetalleFacturasModel.cs" />
@@ -127,6 +128,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ViewModel\FacturasGridViewModel.cs" />
+    <Compile Include="ViewModel\LoginEmpresasViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\ProductosViewModel.cs" />
     <Compile Include="ViewModel\ProductosGridViewModel.cs" />
@@ -146,6 +148,9 @@
     </Compile>
     <Compile Include="Views\FacturasGridView.xaml.cs">
       <DependentUpon>FacturasGridView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginEmpresasView.xaml.cs">
+      <DependentUpon>LoginEmpresasView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -191,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FacturasGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginEmpresasView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

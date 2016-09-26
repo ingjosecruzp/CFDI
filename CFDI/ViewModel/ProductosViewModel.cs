@@ -80,7 +80,6 @@ namespace CFDI.ViewModel
                 RaisePropertyChangedEvent("Color");
             }
         }
-
         public ProductosViewModel()
         {
             _SelectUnidad = new UnidadesModel();

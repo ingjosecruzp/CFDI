@@ -46,7 +46,7 @@ namespace CFDI.ViewModel
             clientesViewModel.CargarForm(SelectCliente.Id);
             //FrmClientes.ShowInTaskbar = false;
             //FrmClientes.Topmost = true;
-            FrmClientes.Owner = Application.Current.Windows[0];
+            //FrmClientes.Owner = Application.Current.Windows[0];
             FrmClientes.ShowDialog();
         }
         private void Llamar(object parameter)
@@ -61,6 +61,5 @@ namespace CFDI.ViewModel
             ServicioWS WS = new ServicioWS("WsClientes.svc", "getClientesGrid", null, typeof(ObservableCollection<GridClientes>),null);
             Clientes = (ObservableCollection<GridClientes>)WS.Peticion();
         }
-
     }
 }

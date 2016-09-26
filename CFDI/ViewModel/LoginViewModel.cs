@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using CFDI.ViewModel;
+using CFDI.Views;
 
 namespace CFDI.ViewModel
 {
@@ -66,7 +68,13 @@ namespace CFDI.ViewModel
                     if (TokenModel.Nombre == "050")
                         throw new Exception("Usuario o contraseña invalidos");
                     else
+                    {
+                        LoginEmpresasView FrmEmpresas = new LoginEmpresasView();
+                        LoginEmpresasViewModel ContextEmpresas = new LoginEmpresasViewModel();
+                        FrmEmpresas.DataContext = ContextEmpresas;
+                        FrmEmpresas.Show();
                         CerrarFormulario("FrmLogin");
+                    }
                 }
                 else
                 { 

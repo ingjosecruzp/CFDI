@@ -29,6 +29,8 @@ namespace CFDI.ViewModel
                 if (_Detalle.ProductoId != value)
                         PrecioUnitario = 0;
                 _Detalle.ProductoId = value;
+                ServicioWS WS = new ServicioWS("WsProductos.svc", "getProducto", _Detalle.ProductoId, typeof(ProductosModel), "id");
+                UnidadId = ((ProductosModel)WS.Peticion()).UnidadId;
                 RaisePropertyChangedEvent("ProductoId");
             }
         }
@@ -43,6 +45,7 @@ namespace CFDI.ViewModel
             set
             {
                 _Detalle.UnidadId = value;
+                RaisePropertyChangedEvent("UnidadId");
             }
         }
 

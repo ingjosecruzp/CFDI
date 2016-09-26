@@ -9,5 +9,6 @@ namespace CFDI.Model
     public static class GlobalsVariables
     {
         public static bool Peticion { get; set; }
+        public static string Rfc { get; set; }
     }
 }

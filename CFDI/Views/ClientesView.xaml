@@ -6,8 +6,8 @@
         xmlns:Views="clr-namespace:CFDI.Views"
         xmlns:ViewModel="clr-namespace:CFDI.ViewModel"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        mc:Ignorable="d"
-        Title="Cliente" Height="549.667" Width="356.333" WindowStartupLocation="CenterScreen" >
+        mc:Ignorable="d" FocusManager.FocusedElement="{Binding ElementName=rfc}"  
+        Title="Cliente" Height="549.667" Width="356.333" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Views:ClientesGridView x:Key="ClientesGridView" />
         <Style TargetType="{x:Type Label}">

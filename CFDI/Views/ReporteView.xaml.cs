@@ -38,7 +38,7 @@ namespace CFDI.Views
             report.SetDataSource(reportData);
 
             report.SetParameterValue("CBBPath", folio + ".bmp");
-            report.SetParameterValue("LogoPath", Environment.CurrentDirectory + @"\pt.jpg");
+            report.SetParameterValue("LogoPath", Environment.CurrentDirectory + @"\Logo.jpg");
             report.SetParameterValue("CadenaOriginal",GeneradorCadenas(folio + ".xml"));
 
             CrystalReportsViewer1.ViewerCore.ReportSource = report;

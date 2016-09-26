@@ -108,7 +108,6 @@ namespace CFDI.ViewModel
             {
                 return _ClienteNuevo;
             }
-
             set
             {
                 if (_ClienteNuevo != value)
@@ -145,8 +144,11 @@ namespace CFDI.ViewModel
         }
         public void LoadMunicipios()
         {
-            ServicioWS WS = new ServicioWS("WsMunicipios.svc", "getMunicipios", _SelectEstado, typeof(ObservableCollection<MunicipiosModel>), "estado");
-            Municipios = (ObservableCollection<MunicipiosModel>)WS.Peticion();
+            if(_SelectEstado!= null)
+            { 
+                ServicioWS WS = new ServicioWS("WsMunicipios.svc", "getMunicipios", _SelectEstado, typeof(ObservableCollection<MunicipiosModel>), "estado");
+                Municipios = (ObservableCollection<MunicipiosModel>)WS.Peticion();
+            }
         }
         public void LoadEstados()
         {
@@ -156,7 +158,6 @@ namespace CFDI.ViewModel
         public void CerrarVentana(object parameter)
         {
             CerrarFormulario("FrmClientes");
-            //Application.Current.MainWindow.Close();
         }
         private void Guardar(object parameter)
         {
@@ -167,9 +168,9 @@ namespace CFDI.ViewModel
                 if (Cliente.Id.ToString() == "0")
                     WS = new ServicioWS("WsClientes.svc", "addCliente", Cliente, typeof(ClientesModel), "cliente");
                 else
-                    WS = new ServicioWS("WsClientes.svc", "updateCliente", Cliente, typeof(ClientesModel), "cliente");
+                    WS = new ServicioWS("WsClientes.svc", "updateCliente",Cliente, typeof(ClientesModel), "cliente");
                 Cliente = (ClientesModel)WS.Peticion();
-                CerrarVentana("FrmClientes");
+                //CerrarVentana("FrmClientes");
             }
             else
                 MessageBox.Show("Antes de continuar, debe de corregir los erros señalados","Error",MessageBoxButton.OK,MessageBoxImage.Error);

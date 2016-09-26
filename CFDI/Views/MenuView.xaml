@@ -21,7 +21,7 @@
         </DataTemplate>
     </UserControl.Resources>
     <DockPanel LastChildFill="True" ScrollViewer.VerticalScrollBarVisibility="Visible">
-                <StatusBar DockPanel.Dock="Bottom">
+         <StatusBar DockPanel.Dock="Bottom">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -47,12 +47,12 @@
             </StatusBarItem>
             <Separator Grid.Column="3" />
             <StatusBarItem Grid.Column="4">
-                <ProgressBar Value="50" Width="190" Height="16" IsIndeterminate="True" />
+                <ProgressBar Value="0" Width="190" Height="16" IsIndeterminate="{Binding Barra}" />
             </StatusBarItem>
         </StatusBar>
-        <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <ListBoxItem Width="190">
-                <Button Background="OliveDrab" Command="{Binding HolaMundo}"  CommandParameter="Facturas" Cursor="Hand">
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Auto" TabIndex="-1">
+            <ListBoxItem Width="190" TabIndex="-1">
+                <Button Background="OliveDrab" Command="{Binding HolaMundo}"  CommandParameter="Facturas" Cursor="Hand" TabIndex="-1">
                     <BulletDecorator Width="176">
                         <BulletDecorator.Bullet>
                             <Image Source="pack://application:,,,/Iconos/appbar.page.text.png" Width="64" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top" />
@@ -92,6 +92,6 @@
                 </Button>
             </ListBoxItem>
         </ListBox>
-        <ContentControl x:Name="Principal" Content="{Binding SelectedViewModel}" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+        <ContentControl x:Name="Principal" Content="{Binding SelectedViewModel}" ScrollViewer.VerticalScrollBarVisibility="Visible" TabIndex="-1"/>
     </DockPanel>
 </UserControl>

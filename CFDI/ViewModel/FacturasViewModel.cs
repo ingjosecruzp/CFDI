@@ -24,6 +24,7 @@ namespace CFDI.ViewModel
         public DelegateCommand _NuevoProducto { get; set; }
         public DelegateCommand _NuevoCliente { get; set; }
         public DelegateCommand _EliminarProducto { get; set; }
+        public DelegateCommand _NuevoConcepto { get; set; }
         private ObservableCollection<ClientesModel> _Clientes;
         private ClientesModel _SelectCliente;
         private ObservableCollection<EstadosModel> _Estados;
@@ -400,8 +401,11 @@ namespace CFDI.ViewModel
             _GuardarFactura = new DelegateCommand(GuardarFactura);
             _CerrarFactura = new DelegateCommand(CerrarFactura);
             _EliminarProducto = new DelegateCommand(EliminarProducto);
+            _NuevoConcepto = new DelegateCommand(NuevoConcepto);
             CalcularGrid = new DelegateCommand(Calculos);
+            SelectDetalleProductos = new DetalleViewModel();
             Factura = new FacturasModel();
+            Factura.LugarExpedicion = "Mazatlán,Sinaloa";
             _Color = "Black";
             LoadClientes();
             LoadPaises();
@@ -412,12 +416,30 @@ namespace CFDI.ViewModel
             LoadUnidades();
             LoadProductos();
         }
+        public void NuevoConcepto(object parameter)
+        {
+            try
+            {
+                Detalles.Add(new DetalleViewModel
+                {
+                    Cantidad = 0
+                });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public void EliminarProducto(object parameter)
         {
-            Detalles.Remove(SelectDetalleProductos);
-            RaisePropertyChangedEvent("Subtotal");
-            RaisePropertyChangedEvent("Iva");
-            RaisePropertyChangedEvent("Total");
+            if(Detalles.Count>0)
+            {  
+                Detalles.Remove(SelectDetalleProductos);
+                RaisePropertyChangedEvent("Subtotal");
+                RaisePropertyChangedEvent("Iva");
+                RaisePropertyChangedEvent("Total");
+            }
         }
         public void NuevoCliente(object parameter)
         {
@@ -444,12 +466,10 @@ namespace CFDI.ViewModel
             FrmProductos.ShowDialog();
             if(ViewModelProductos.Producto.Id != 0)
             {
-                LoadProductos();
-                Detalles.Add(new DetalleViewModel{  
-                                ProductoId= ViewModelProductos.Producto.Id,
-                                UnidadId= ViewModelProductos.Producto.UnidadId,
-                                PrecioUnitario= ViewModelProductos.Producto.PrecioUnitario,
-                });
+                Productos.Add(ViewModelProductos.Producto);
+                SelectDetalleProductos.ProductoId = ViewModelProductos.Producto.Id;
+                SelectDetalleProductos.UnidadId = ViewModelProductos.Producto.UnidadId;
+                SelectDetalleProductos.PrecioUnitario = ViewModelProductos.Producto.PrecioUnitario;
             }
         }
         public void Calculos(object parameter)
@@ -553,6 +573,7 @@ namespace CFDI.ViewModel
 
                 if (Factura.ClienteId != 0 && Factura.MetododePagosId != 0 && Factura.LugarExpedicion != "" && Factura.LugarExpedicion != null && Factura.SerieId != 0 && Factura.TipoPago != 0)
                 {
+                    GlobalsVariables.Peticion = true;
                     if (SelectMetodosdePagos.Clave != "01" & SelectMetodosdePagos.Clave != "99" && (Factura.CuentaPago.Length < 4 || Factura.CuentaPago == null || Factura.CuentaPago == ""))
                         throw new Exception("Verifique el campo cuenta de pago, al menos debe contener 4 digitios");
                     if (Detalles.ToList().Count > 0)
@@ -568,6 +589,10 @@ namespace CFDI.ViewModel
                             Factura = new FacturasModel();
                             Detalles = new ObservableCollection<DetalleViewModel>();
                             SelectSeries = new SeriesModel();
+                            RaisePropertyChangedEvent("Subtotal");
+                            RaisePropertyChangedEvent("Iva");
+                            RaisePropertyChangedEvent("Total");
+                            GlobalsVariables.Peticion = false;
                         }
                         else
                             throw new Exception(Respueta.msj);
@@ -588,7 +613,7 @@ namespace CFDI.ViewModel
         }
         public void CerrarFactura(object parameter)
         {
-            MessageBox.Show("Cerrar");
+            //MessageBox.Show("Cerrar");
         }
         public void CargarDetalles()
         {
@@ -610,8 +635,13 @@ namespace CFDI.ViewModel
         }
         public int LoadFolio()
         {
-            ServicioWS WS = new ServicioWS("WsSeries.svc", "getUltimoFolio", _SelectSeries.Id, typeof(string), "serieid");
-            return Convert.ToInt16((string)WS.Peticion());
+            int folio = 0;
+            if(_SelectSeries.Id!= 0)
+            { 
+                ServicioWS WS = new ServicioWS("WsSeries.svc", "getUltimoFolio", _SelectSeries.Id, typeof(string), "serieid");
+                folio=Convert.ToInt16((string)WS.Peticion());
+            }
+            return folio;
         }
         private static void Base64Decode(string archivo_base64, string ruta, string nombre_archivo)
         {
@@ -638,7 +668,7 @@ namespace CFDI.ViewModel
                 reportData.ReadXml(ruta + "\\" + Respueta.folio + ".xml");
                 report.SetDataSource(reportData);
                 report.SetParameterValue("CBBPath", ruta + "\\" + Fact.folio + ".bmp");
-                report.SetParameterValue("LogoPath", ruta + "\\" + Fact.folio + ".jpg");
+                report.SetParameterValue("LogoPath", Environment.CurrentDirectory + @"\Logo.jpg");
                 report.SetParameterValue("CadenaOriginal", Fact.cadenaoriginal);
                 //report.Refresh();
 
